@@ -1,0 +1,170 @@
+{% extends "admin/base.html" %}
+
+{% block title %}UPDATES MANAGEMENT — ZERO RECOIL ADMIN{% endblock %}
+{% block admin_title %}ANNOUNCEMENTS & PATCH NOTES{% endblock %}
+
+{% block admin_content %}
+<div class="space-y-8">
+  
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div>
+      <h1 class="font-heading font-black text-2xl text-white">PATCH NOTES & ARTICLES</h1>
+      <p class="text-xs text-gray-400 font-esports">PUBLISH ESPORTS SENSITIVITY BULLETINS FOR PLAYERS</p>
+    </div>
+
+    <button onclick="document.getElementById('add-update-modal').classList.remove('hidden')" class="btn-esports-red text-xs py-2 px-4">
+      <i class="fa-solid fa-plus"></i> PUBLISH NEW UPDATE
+    </button>
+  </div>
+
+  <div class="glass-card rounded-lg border border-[#1E1E1E] overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs font-esports">
+        <thead class="bg-[#080808] border-b border-[#1E1E1E] text-gray-400 uppercase tracking-wider">
+          <tr>
+            <th class="p-4">BANNER</th>
+            <th class="p-4">TITLE</th>
+            <th class="p-4">AUTHOR</th>
+            <th class="p-4">DATE</th>
+            <th class="p-4">PUBLISHED</th>
+            <th class="p-4 text-right">ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[#1E1E1E]">
+          {% for u in updates %}
+          <tr class="hover:bg-[#120505] transition">
+            <td class="p-4">
+              <div class="w-16 h-10 bg-black rounded overflow-hidden">
+                {% if u.image %}
+                  <img src="{{ u.image }}" alt="{{ u.title }}" class="w-full h-full object-cover">
+                {% else %}
+                  <div class="w-full h-full flex items-center justify-center text-gray-600"><i class="fa-solid fa-image"></i></div>
+                {% endif %}
+              </div>
+            </td>
+            <td class="p-4 font-heading font-bold text-sm text-white">
+              {{ u.title }}
+            </td>
+            <td class="p-4 text-[#FF1A1A] font-bold">
+              {{ u.admin_name }}
+            </td>
+            <td class="p-4 text-gray-400">
+              {{ u.created_at[:10] }}
+            </td>
+            <td class="p-4">
+              <form action="{{ url_for('admin_toggle_update_status', id=u.id) }}" method="POST">
+                <button type="submit" class="px-2 py-0.5 rounded font-bold uppercase text-[10px] {% if u.published %}bg-green-950 text-green-400 border border-green-700{% else %}bg-zinc-800 text-gray-400{% endif %}">
+                  {% if u.published %}PUBLISHED{% else %}DRAFT{% endif %}
+                </button>
+              </form>
+            </td>
+            <td class="p-4 text-right space-x-2">
+              <button onclick="openEditUpdateModal({{ u.id }}, '{{ u.title|replace('\'', '\\\'') }}', '{{ u.image or '' }}', '{{ u.description|replace('\'', '\\\'')|replace('\n', ' ') }}', '{{ u.admin_name }}')" 
+                      class="text-gray-300 hover:text-white p-1" title="Edit">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <form action="{{ url_for('admin_delete_update', id=u.id) }}" method="POST" class="inline" onsubmit="return confirm('Delete this update?');">
+                <button type="submit" class="text-red-500 hover:text-red-300 p-1" title="Delete">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ADD UPDATE MODAL -->
+<div id="add-update-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+  <div class="glass-card rounded-lg border border-[#FF1A1A] p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-heading font-bold text-lg text-white">PUBLISH NEW UPDATE</h3>
+      <button onclick="document.getElementById('add-update-modal').classList.add('hidden')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+    </div>
+
+    <form action="{{ url_for('admin_add_update') }}" method="POST" class="space-y-4 text-xs font-esports">
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">TITLE</label>
+        <input type="text" name="title" required placeholder="e.g. OB46 HEADSHOT SENSITIVITY CALIBRATION COMPLETE" class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2 text-white font-body">
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">IMAGE URL</label>
+        <input type="url" name="image" placeholder="https://images.unsplash.com/..." class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2 text-white font-body">
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">CONTENT / DESCRIPTION</label>
+        <textarea name="description" rows="4" required placeholder="Detailed patch or sensitivity notes..." class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2 text-white font-body"></textarea>
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">AUTHOR ATTRIBUTION</label>
+        <select name="admin_name" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+          <option value="ARMUGA">ARMUGA</option>
+          <option value="CATZX">CATZX</option>
+          <option value="ARMUGA X CATZX" selected>ARMUGA X CATZX</option>
+        </select>
+      </div>
+
+      <button type="submit" class="w-full btn-esports-red py-2.5 text-sm font-bold">PUBLISH UPDATE</button>
+    </form>
+  </div>
+</div>
+
+<!-- EDIT UPDATE MODAL -->
+<div id="edit-update-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+  <div class="glass-card rounded-lg border border-[#FF1A1A] p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-heading font-bold text-lg text-white">EDIT UPDATE</h3>
+      <button onclick="document.getElementById('edit-update-modal').classList.add('hidden')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+    </div>
+
+    <form id="edit-update-form" method="POST" class="space-y-4 text-xs font-esports">
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">TITLE</label>
+        <input type="text" id="edit-up-title" name="title" required class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">IMAGE URL</label>
+        <input type="url" id="edit-up-image" name="image" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">CONTENT / DESCRIPTION</label>
+        <textarea id="edit-up-desc" name="description" rows="4" required class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body"></textarea>
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">AUTHOR</label>
+        <select id="edit-up-author" name="admin_name" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+          <option value="ARMUGA">ARMUGA</option>
+          <option value="CATZX">CATZX</option>
+          <option value="ARMUGA X CATZX">ARMUGA X CATZX</option>
+        </select>
+      </div>
+
+      <button type="submit" class="w-full btn-esports-red py-2.5 text-sm font-bold">UPDATE RELEASE</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block admin_scripts %}
+<script>
+function openEditUpdateModal(id, title, img, desc, author) {
+  const form = document.getElementById('edit-update-form');
+  form.action = `/admin/updates/edit/${id}`;
+  document.getElementById('edit-up-title').value = title;
+  document.getElementById('edit-up-image').value = img;
+  document.getElementById('edit-up-desc').value = desc;
+  document.getElementById('edit-up-author').value = author;
+  document.getElementById('edit-update-modal').classList.remove('hidden');
+}
+</script>
+{% endblock %}

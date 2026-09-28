@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}{{ device.brand_name }} {{ device.model_name }} — ZERO RECOIL SENSITIVITY{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+  
+  <!-- Breadcrumbs -->
+  <div class="flex items-center gap-2 text-xs font-esports text-gray-400 mb-6">
+    <a href="{{ url_for('index') }}" class="hover:text-[#FF1A1A]">HOME</a>
+    <span>/</span>
+    <a href="{{ url_for('devices_list') }}" class="hover:text-[#FF1A1A]">DEVICES</a>
+    <span>/</span>
+    <a href="{{ url_for('devices_list') }}?brand={{ device.brand_slug }}" class="hover:text-[#FF1A1A]">{{ device.brand_name }}</a>
+    <span>/</span>
+    <span class="text-[#FF1A1A] font-bold">{{ device.model_name }}</span>
+  </div>
+
+  <!-- Device Overview Card -->
+  <div class="glass-card rounded-lg p-6 sm:p-8 border border-[#B00000]/40 mb-10 shadow-[0_0_30px_rgba(255,26,26,0.15)]">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-[#1E1E1E] pb-6 mb-6">
+      <div>
+        <div class="inline-flex items-center gap-2 text-xs font-esports font-bold text-[#FF1A1A] uppercase tracking-wider mb-1">
+          <i class="fa-solid fa-mobile-screen"></i> HARDWARE PROFILE
+        </div>
+        <h1 class="font-heading font-black text-3xl sm:text-5xl text-white tracking-wider">
+          {{ device.brand_name }} <span class="text-[#FF1A1A]">{{ device.model_name }}</span>
+        </h1>
+        <p class="text-xs sm:text-sm text-gray-400 font-esports tracking-wider mt-1">
+          OPTIMIZED TOUCH LATENCY & RECOIL RECOVERY PROFILE
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="{{ url_for('sensitivity_page') }}?device={{ device.id }}" class="btn-esports-red text-sm py-2.5 px-6">
+          <i class="fa-solid fa-crosshairs"></i> TUNE SENSITIVITY
+        </a>
+      </div>
+    </div>
+
+    <!-- Specs Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="bg-[#050505] p-4 rounded border border-[#1E1E1E]">
+        <div class="flex items-center gap-2 text-[#FF1A1A] text-xs font-esports font-bold mb-1">
+          <i class="fa-solid fa-microchip"></i> PROCESSOR
+        </div>
+        <div class="font-heading font-bold text-sm text-white truncate">{{ device.processor }}</div>
+      </div>
+
+      <div class="bg-[#050505] p-4 rounded border border-[#1E1E1E]">
+        <div class="flex items-center gap-2 text-[#FF1A1A] text-xs font-esports font-bold mb-1">
+          <i class="fa-solid fa-memory"></i> AVAILABLE RAM
+        </div>
+        <div class="font-heading font-bold text-sm text-white">{{ device.ram_list or 'Standard' }}</div>
+      </div>
+
+      <div class="bg-[#050505] p-4 rounded border border-[#1E1E1E]">
+        <div class="flex items-center gap-2 text-[#FF1A1A] text-xs font-esports font-bold mb-1">
+          <i class="fa-solid fa-gauge-high"></i> REFRESH RATE
+        </div>
+        <div class="font-heading font-bold text-sm text-white">{{ device.refresh_rate }}</div>
+      </div>
+
+      <div class="bg-[#050505] p-4 rounded border border-[#1E1E1E]">
+        <div class="flex items-center gap-2 text-[#FF1A1A] text-xs font-esports font-bold mb-1">
+          <i class="fa-solid fa-robot"></i> OPERATING SYSTEM
+        </div>
+        <div class="font-heading font-bold text-sm text-white truncate">{{ device.operating_system }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVAILABLE ZERO RECOIL SETTINGS -->
+  <div class="mb-12">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="font-heading font-bold text-xl sm:text-2xl text-white tracking-wider">
+          AVAILABLE <span class="text-[#FF1A1A]">ZERO RECOIL SETTINGS</span>
+        </h2>
+        <p class="text-xs text-gray-400 font-esports tracking-wider">CALIBRATED WEAPONS FOR {{ device.model_name }}</p>
+      </div>
+      <span class="text-xs font-esports font-bold text-[#FF1A1A] bg-[#120505] px-3 py-1 rounded border border-[#B00000]/40">
+        {{ guns_sens|length }} WEAPONS BENCHMARKED
+      </span>
+    </div>
+
+    {% if guns_sens %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for s in guns_sens %}
+        <div class="glass-card rounded p-5 border border-[#1E1E1E] hover:border-[#FF1A1A] transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="text-[10px] font-esports font-bold text-[#FF1A1A] tracking-wider uppercase">{{ s.category_name }}</span>
+                <h4 class="font-heading font-black text-lg text-white mt-0.5">{{ s.gun_name }}</h4>
+              </div>
+              <span class="text-xs bg-[#0B0B0B] text-gray-300 px-2 py-0.5 rounded font-esports border border-[#1E1E1E]">{{ s.ram }}</span>
+            </div>
+
+            <!-- Sensitivity Quick Glance -->
+            <div class="mt-4 grid grid-cols-3 gap-2 text-center text-xs font-esports bg-[#050505] p-2.5 rounded border border-[#1E1E1E]">
+              <div>
+                <span class="text-gray-500 block text-[9px]">GENERAL</span>
+                <span class="font-heading font-bold text-[#FF1A1A] text-base">{{ s.general }}</span>
+              </div>
+              <div>
+                <span class="text-gray-500 block text-[9px]">RED DOT</span>
+                <span class="font-heading font-bold text-[#FF1A1A] text-base">{{ s.red_dot }}</span>
+              </div>
+              <div>
+                <span class="text-gray-500 block text-[9px]">DPI</span>
+                <span class="font-heading font-bold text-white text-base">{{ s.dpi or '411' }}</span>
+              </div>
+            </div>
+
+            <div class="mt-2 text-[10px] text-gray-400 font-body truncate">
+              <strong class="text-gray-300">Aim:</strong> {{ s.aim_precision }} | <strong class="text-gray-300">Btn:</strong> {{ s.fire_button_size }}%
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-[#1E1E1E] flex items-center justify-between text-xs font-esports">
+            <span class="text-gray-500">TESTED BY <strong class="text-white">{{ s.updated_by }}</strong></span>
+            <a href="{{ url_for('sensitivity_page') }}?gun={{ s.gun_slug }}&device={{ device.id }}&ram={{ s.ram }}" 
+               class="btn-esports-red text-[11px] py-1 px-3">
+              VIEW SENSITIVITY →
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="glass-card rounded-lg p-8 text-center border border-[#1E1E1E]">
+        <i class="fa-solid fa-crosshairs text-3xl text-gray-600 mb-2"></i>
+        <h3 class="font-heading font-bold text-base text-white mb-1">NO WEAPONS BENCHMARKED FOR THIS MODEL YET</h3>
+        <p class="text-xs text-gray-400 font-body mb-4">
+          Request ARMUGA and CATZX to calibrate your favorite weapons on this phone.
+        </p>
+        <a href="{{ url_for('sensitivity_page') }}?device={{ device.id }}" class="btn-esports-red text-xs py-2 px-6">
+          REQUEST SENSITIVITY
+        </a>
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

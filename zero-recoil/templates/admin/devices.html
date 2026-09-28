@@ -1,0 +1,262 @@
+{% extends "admin/base.html" %}
+
+{% block title %}DEVICE MANAGEMENT — ZERO RECOIL ADMIN{% endblock %}
+{% block admin_title %}DEVICE & BRAND MANAGEMENT{% endblock %}
+
+{% block admin_content %}
+<div class="space-y-8">
+  
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div>
+      <h1 class="font-heading font-black text-2xl text-white">DEVICE HARDWARE MATRIX</h1>
+      <p class="text-xs text-gray-400 font-esports">MANAGE BRANDS, MODELS, PROCESSORS & RAM SPECIFICATIONS</p>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <button onclick="document.getElementById('add-device-modal').classList.remove('hidden')" class="btn-esports-red text-xs py-2 px-4">
+        <i class="fa-solid fa-plus"></i> ADD NEW MODEL
+      </button>
+      <button onclick="document.getElementById('add-brand-modal').classList.remove('hidden')" class="btn-esports-outline text-xs py-2 px-3">
+        <i class="fa-solid fa-tag text-[#FF1A1A]"></i> NEW BRAND
+      </button>
+    </div>
+  </div>
+
+  <!-- Brands Row -->
+  <div class="glass-card rounded p-4 border border-[#1E1E1E]">
+    <div class="text-xs font-esports font-bold text-gray-400 mb-2">FILTER BY BRAND</div>
+    <div class="flex flex-wrap items-center gap-2 text-xs font-esports">
+      <a href="{{ url_for('admin_devices') }}" class="px-2.5 py-1 rounded transition {% if not active_brand %}bg-[#FF1A1A] text-white font-bold{% else %}bg-[#050505] text-gray-400 border border-[#1E1E1E]{% endif %}">
+        ALL BRANDS ({{ devices|length }})
+      </a>
+      {% for b in brands %}
+      <a href="{{ url_for('admin_devices') }}?brand={{ b.slug }}" class="px-2.5 py-1 rounded transition {% if active_brand == b.slug %}bg-[#FF1A1A] text-white font-bold{% else %}bg-[#050505] text-gray-400 border border-[#1E1E1E]{% endif %}">
+        {{ b.name }} ({{ b.device_count }})
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Devices Table -->
+  <div class="glass-card rounded-lg border border-[#1E1E1E] overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs font-esports">
+        <thead class="bg-[#080808] border-b border-[#1E1E1E] text-gray-400 uppercase tracking-wider">
+          <tr>
+            <th class="p-4">BRAND</th>
+            <th class="p-4">MODEL NAME</th>
+            <th class="p-4">PROCESSOR</th>
+            <th class="p-4">RAM OPTIONS</th>
+            <th class="p-4">REFRESH RATE</th>
+            <th class="p-4">STATUS</th>
+            <th class="p-4 text-right">ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[#1E1E1E]">
+          {% for d in devices %}
+          <tr class="hover:bg-[#120505] transition">
+            <td class="p-4 font-bold text-[#FF1A1A]">
+              {{ d.brand_name }}
+            </td>
+            <td class="p-4 font-heading font-bold text-sm text-white">
+              {{ d.model_name }}
+            </td>
+            <td class="p-4 text-gray-300">
+              {{ d.processor }}
+            </td>
+            <td class="p-4 text-gray-400">
+              {{ d.ram_list or 'Standard' }}
+            </td>
+            <td class="p-4">
+              <span class="bg-[#120505] border border-[#B00000]/40 text-gray-300 px-2 py-0.5 rounded text-[10px]">
+                {{ d.refresh_rate }}
+              </span>
+            </td>
+            <td class="p-4">
+              <form action="{{ url_for('admin_toggle_device_status', id=d.id) }}" method="POST">
+                <button type="submit" class="px-2 py-0.5 rounded font-bold uppercase text-[10px] {% if d.status == 'active' %}bg-green-950 text-green-400 border border-green-700{% else %}bg-zinc-800 text-gray-400{% endif %}">
+                  {{ d.status }}
+                </button>
+              </form>
+            </td>
+            <td class="p-4 text-right space-x-2">
+              <button onclick="openEditDeviceModal({{ d.id }}, {{ d.brand_id }}, '{{ d.model_name }}', '{{ d.processor }}', '{{ d.display or '' }}', '{{ d.refresh_rate }}', '{{ d.operating_system }}', '{{ d.ram_list or '' }}')" 
+                      class="text-gray-300 hover:text-white p-1" title="Edit">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <form action="{{ url_for('admin_delete_device', id=d.id) }}" method="POST" class="inline" onsubmit="return confirm('Delete this device and its sensitivities?');">
+                <button type="submit" class="text-red-500 hover:text-red-300 p-1" title="Delete">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ADD DEVICE MODAL -->
+<div id="add-device-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+  <div class="glass-card rounded-lg border border-[#FF1A1A] p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-heading font-bold text-lg text-white">ADD NEW DEVICE MODEL</h3>
+      <button onclick="document.getElementById('add-device-modal').classList.add('hidden')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+    </div>
+
+    <form action="{{ url_for('admin_add_device') }}" method="POST" class="space-y-4 text-xs font-esports">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-300 mb-1 font-bold">BRAND</label>
+          <select name="brand_id" required class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2 text-white font-body">
+            {% for b in brands %}
+            <option value="{{ b.id }}">{{ b.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div>
+          <label class="block text-gray-300 mb-1 font-bold">MODEL NAME</label>
+          <input type="text" name="model_name" required placeholder="e.g. POCO X7 Pro" class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2 text-white font-body">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">PROCESSOR</label>
+        <input type="text" name="processor" required placeholder="e.g. Dimensity 8400 Ultra" class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2 text-white font-body">
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">RAM OPTIONS (COMMA SEPARATED)</label>
+        <input type="text" name="rams" placeholder="6 GB, 8 GB, 12 GB" value="6 GB, 8 GB, 12 GB" class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2 text-white font-body">
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-300 mb-1 font-bold">REFRESH RATE</label>
+          <select name="refresh_rate" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+            <option value="60Hz">60Hz</option>
+            <option value="90Hz">90Hz</option>
+            <option value="120Hz" selected>120Hz</option>
+            <option value="144Hz">144Hz</option>
+            <option value="165Hz">165Hz</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-gray-300 mb-1 font-bold">OPERATING SYSTEM</label>
+          <input type="text" name="operating_system" value="Android 14" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">DISPLAY DESCRIPTION</label>
+        <input type="text" name="display" placeholder="6.67 inch AMOLED" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+      </div>
+
+      <button type="submit" class="w-full btn-esports-red py-2.5 text-sm">SAVE DEVICE</button>
+    </form>
+  </div>
+</div>
+
+<!-- EDIT DEVICE MODAL -->
+<div id="edit-device-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+  <div class="glass-card rounded-lg border border-[#FF1A1A] p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-heading font-bold text-lg text-white">EDIT DEVICE MODEL</h3>
+      <button onclick="document.getElementById('edit-device-modal').classList.add('hidden')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+    </div>
+
+    <form id="edit-device-form" method="POST" class="space-y-4 text-xs font-esports">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-300 mb-1 font-bold">BRAND</label>
+          <select id="edit-dev-brand" name="brand_id" required class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+            {% for b in brands %}
+            <option value="{{ b.id }}">{{ b.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div>
+          <label class="block text-gray-300 mb-1 font-bold">MODEL NAME</label>
+          <input type="text" id="edit-dev-model" name="model_name" required class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">PROCESSOR</label>
+        <input type="text" id="edit-dev-processor" name="processor" required class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">RAM OPTIONS (COMMA SEPARATED)</label>
+        <input type="text" id="edit-dev-rams" name="rams" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-300 mb-1 font-bold">REFRESH RATE</label>
+          <select id="edit-dev-refresh" name="refresh_rate" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+            <option value="60Hz">60Hz</option>
+            <option value="90Hz">90Hz</option>
+            <option value="120Hz">120Hz</option>
+            <option value="144Hz">144Hz</option>
+            <option value="165Hz">165Hz</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-gray-300 mb-1 font-bold">OPERATING SYSTEM</label>
+          <input type="text" id="edit-dev-os" name="operating_system" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">DISPLAY DESCRIPTION</label>
+        <input type="text" id="edit-dev-display" name="display" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+      </div>
+
+      <button type="submit" class="w-full btn-esports-red py-2.5 text-sm">UPDATE DEVICE</button>
+    </form>
+  </div>
+</div>
+
+<!-- ADD BRAND MODAL -->
+<div id="add-brand-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+  <div class="glass-card rounded-lg border border-[#FF1A1A] p-6 max-w-md w-full">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-heading font-bold text-lg text-white">ADD NEW BRAND</h3>
+      <button onclick="document.getElementById('add-brand-modal').classList.add('hidden')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+    </div>
+
+    <form action="{{ url_for('admin_add_brand') }}" method="POST" class="space-y-4 text-xs font-esports">
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">BRAND NAME</label>
+        <input type="text" name="name" required placeholder="e.g. Black Shark" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+      </div>
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">ICON CLASS</label>
+        <input type="text" name="logo" value="fa-mobile" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+      </div>
+      <button type="submit" class="w-full btn-esports-red py-2.5 text-sm">ADD BRAND</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block admin_scripts %}
+<script>
+function openEditDeviceModal(id, brandId, model, proc, disp, refresh, os, rams) {
+  const form = document.getElementById('edit-device-form');
+  form.action = `/admin/devices/edit/${id}`;
+  document.getElementById('edit-dev-brand').value = brandId;
+  document.getElementById('edit-dev-model').value = model;
+  document.getElementById('edit-dev-processor').value = proc;
+  document.getElementById('edit-dev-display').value = disp;
+  document.getElementById('edit-dev-refresh').value = refresh;
+  document.getElementById('edit-dev-os').value = os;
+  document.getElementById('edit-dev-rams').value = rams;
+  document.getElementById('edit-device-modal').classList.remove('hidden');
+}
+</script>
+{% endblock %}

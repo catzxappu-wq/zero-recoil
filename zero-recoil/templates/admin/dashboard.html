@@ -1,0 +1,172 @@
+{% extends "admin/base.html" %}
+
+{% block title %}ADMIN DASHBOARD — ZERO RECOIL | ARMUGA X CATZX{% endblock %}
+{% block admin_title %}ZERO RECOIL ADMIN PANEL{% endblock %}
+
+{% block admin_content %}
+<div class="space-y-8">
+  
+  <!-- Welcome Banner with Live Status Indicator -->
+  <div class="glass-card rounded-lg p-6 border border-[#B00000]/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div>
+      <div class="text-xs font-esports font-bold text-[#FF1A1A] tracking-wider uppercase mb-1">COMMAND CENTER</div>
+      <h1 class="font-heading font-black text-2xl sm:text-3xl text-white">
+        WELCOME BACK, <span class="text-[#FF1A1A]">{{ current_admin.name }}</span>
+      </h1>
+      <p class="text-xs text-gray-400 font-body">Manage Free Fire sensitivity profiles, devices, updates and live broadcast status.</p>
+    </div>
+
+    <!-- Live Status Quick Pill & Toggle -->
+    <div class="flex items-center gap-3">
+      <div class="px-3.5 py-1.5 rounded border text-xs font-esports font-bold flex items-center gap-2 {% if live_info.is_live %}bg-red-950/60 border-[#FF1A1A] text-white shadow-[0_0_15px_rgba(255,26,26,0.3)]{% else %}bg-zinc-900 border-zinc-700 text-gray-400{% endif %}">
+        {% if live_info.is_live %}
+          <span class="live-pulse-dot"></span>
+          <span>🔴 LIVE BROADCAST ACTIVE</span>
+        {% else %}
+          <span class="w-2 h-2 rounded-full bg-gray-500"></span>
+          <span>STREAM OFFLINE</span>
+        {% endif %}
+      </div>
+      <a href="{{ url_for('admin_live') }}" class="btn-esports-red text-xs py-1.5 px-3">
+        CONTROL LIVE
+      </a>
+    </div>
+  </div>
+
+  <!-- 7 STATISTIC CARDS (Section 17 requirement) -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
+    
+    <!-- 1. Total Users -->
+    <div class="glass-card rounded p-4 border border-[#1E1E1E] hover:border-[#FF1A1A] transition">
+      <div class="text-[11px] font-esports font-bold text-gray-400 uppercase">USERS</div>
+      <div class="font-heading font-black text-2xl sm:text-3xl text-white mt-1">{{ stats.users }}</div>
+      <a href="{{ url_for('admin_users') }}" class="text-[10px] text-[#FF1A1A] hover:underline font-esports block mt-1">VIEW ALL →</a>
+    </div>
+
+    <!-- 2. Total Guns -->
+    <div class="glass-card rounded p-4 border border-[#1E1E1E] hover:border-[#FF1A1A] transition">
+      <div class="text-[11px] font-esports font-bold text-gray-400 uppercase">GUNS</div>
+      <div class="font-heading font-black text-2xl sm:text-3xl text-white mt-1">{{ stats.guns }}</div>
+      <a href="{{ url_for('admin_guns') }}" class="text-[10px] text-[#FF1A1A] hover:underline font-esports block mt-1">MANAGE →</a>
+    </div>
+
+    <!-- 3. Total Brands -->
+    <div class="glass-card rounded p-4 border border-[#1E1E1E] hover:border-[#FF1A1A] transition">
+      <div class="text-[11px] font-esports font-bold text-gray-400 uppercase">BRANDS</div>
+      <div class="font-heading font-black text-2xl sm:text-3xl text-white mt-1">{{ stats.brands }}</div>
+      <a href="{{ url_for('admin_devices') }}" class="text-[10px] text-[#FF1A1A] hover:underline font-esports block mt-1">MANAGE →</a>
+    </div>
+
+    <!-- 4. Total Devices -->
+    <div class="glass-card rounded p-4 border border-[#1E1E1E] hover:border-[#FF1A1A] transition">
+      <div class="text-[11px] font-esports font-bold text-gray-400 uppercase">DEVICES</div>
+      <div class="font-heading font-black text-2xl sm:text-3xl text-white mt-1">{{ stats.devices }}</div>
+      <a href="{{ url_for('admin_devices') }}" class="text-[10px] text-[#FF1A1A] hover:underline font-esports block mt-1">MODELS →</a>
+    </div>
+
+    <!-- 5. Total Sensitivity Records -->
+    <div class="glass-card rounded p-4 border border-[#B00000]/60 bg-[#120505] hover:border-[#FF1A1A] transition">
+      <div class="text-[11px] font-esports font-bold text-[#FF1A1A] uppercase">SENSITIVITIES</div>
+      <div class="font-heading font-black text-2xl sm:text-3xl text-[#FF1A1A] mt-1">{{ stats.sensitivities }}</div>
+      <a href="{{ url_for('admin_sensitivities') }}" class="text-[10px] text-white hover:underline font-esports block mt-1">CALIBRATE →</a>
+    </div>
+
+    <!-- 6. Total Updates -->
+    <div class="glass-card rounded p-4 border border-[#1E1E1E] hover:border-[#FF1A1A] transition">
+      <div class="text-[11px] font-esports font-bold text-gray-400 uppercase">UPDATES</div>
+      <div class="font-heading font-black text-2xl sm:text-3xl text-white mt-1">{{ stats.updates }}</div>
+      <a href="{{ url_for('admin_updates') }}" class="text-[10px] text-[#FF1A1A] hover:underline font-esports block mt-1">MANAGE →</a>
+    </div>
+
+    <!-- 7. Device Requests -->
+    <div class="glass-card rounded p-4 border border-[#1E1E1E] hover:border-[#FF1A1A] transition">
+      <div class="text-[11px] font-esports font-bold text-gray-400 uppercase">REQUESTS</div>
+      <div class="font-heading font-black text-2xl sm:text-3xl text-white mt-1">{{ stats.requests }}</div>
+      <a href="{{ url_for('admin_requests') }}" class="text-[10px] text-[#FF1A1A] hover:underline font-esports block mt-1">REVIEW →</a>
+    </div>
+
+  </div>
+
+  <!-- Quick Action Hub -->
+  <div class="glass-card rounded p-5 border border-[#1E1E1E]">
+    <div class="text-xs font-esports font-bold text-gray-400 mb-3 tracking-wider">QUICK ACTIONS</div>
+    <div class="flex flex-wrap items-center gap-3">
+      <a href="{{ url_for('admin_sensitivities') }}#add-form" class="btn-esports-red text-xs py-2 px-4">
+        <i class="fa-solid fa-plus"></i> ADD SENSITIVITY PROFILE
+      </a>
+      <a href="{{ url_for('admin_bulk_csv') }}" class="btn-esports-outline text-xs py-2 px-4">
+        <i class="fa-solid fa-file-csv text-[#FF1A1A]"></i> BULK CSV IMPORT / EXPORT
+      </a>
+      <a href="{{ url_for('admin_guns') }}#add-gun" class="btn-esports-outline text-xs py-2 px-4">
+        <i class="fa-solid fa-crosshairs text-[#FF1A1A]"></i> ADD NEW GUN
+      </a>
+      <a href="{{ url_for('admin_devices') }}#add-device" class="btn-esports-outline text-xs py-2 px-4">
+        <i class="fa-solid fa-mobile-screen text-[#FF1A1A]"></i> ADD NEW DEVICE
+      </a>
+      <a href="{{ url_for('admin_updates') }}#add-update" class="btn-esports-outline text-xs py-2 px-4">
+        <i class="fa-solid fa-bullhorn text-[#FF1A1A]"></i> PUBLISH PATCH UPDATE
+      </a>
+    </div>
+  </div>
+
+  <!-- Grid: Recent Sensitivities & Activity Audit Log -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    
+    <!-- Recent Sensitivity Profiles -->
+    <div class="glass-card rounded-lg p-6 border border-[#1E1E1E]">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-heading font-bold text-sm text-white flex items-center gap-2">
+          <i class="fa-solid fa-bolt text-[#FF1A1A]"></i> RECENT SENSITIVITY CALIBRATIONS
+        </h3>
+        <a href="{{ url_for('admin_sensitivities') }}" class="text-xs font-esports text-[#FF1A1A] hover:underline font-bold">VIEW ALL</a>
+      </div>
+
+      <div class="space-y-3">
+        {% for s in recent_sensitivities %}
+        <div class="p-3 bg-[#050505] rounded border border-[#1E1E1E] flex items-center justify-between text-xs font-esports">
+          <div>
+            <div class="font-heading font-bold text-white text-sm">
+              {{ s.gun_name }} <span class="text-gray-400 font-normal text-xs">for {{ s.brand_name }} {{ s.model_name }} ({{ s.ram }})</span>
+            </div>
+            <div class="text-[10px] text-gray-500 mt-0.5">
+              General: <strong class="text-[#FF1A1A]">{{ s.general }}</strong> | Red Dot: <strong class="text-[#FF1A1A]">{{ s.red_dot }}</strong> | DPI: <strong class="text-white">{{ s.dpi }}</strong> | Button: <strong class="text-white">{{ s.fire_button_size }}%</strong>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] text-[#FF1A1A] font-bold block">BY {{ s.updated_by }}</span>
+            <span class="text-[9px] text-gray-500">{{ s.created_at[:10] }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Admin Activity Audit Log (Section 34 requirement) -->
+    <div class="glass-card rounded-lg p-6 border border-[#1E1E1E]">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-heading font-bold text-sm text-white flex items-center gap-2">
+          <i class="fa-solid fa-clock-rotate-left text-[#FF1A1A]"></i> ADMIN ACTIVITY AUDIT LOG
+        </h3>
+        <span class="text-[10px] font-esports text-gray-400">ARMUGA & CATZX TRACKER</span>
+      </div>
+
+      <div class="space-y-3 max-h-96 overflow-y-auto pr-1">
+        {% for log in activity_logs %}
+        <div class="p-3 bg-[#050505] rounded border border-[#1E1E1E] text-xs">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-esports font-bold text-[#FF1A1A]">
+              <i class="fa-solid fa-user-shield text-[10px] mr-1"></i> Updated by {{ log.admin_name }}
+            </span>
+            <span class="text-[10px] text-gray-500 font-esports">{{ log.created_at }}</span>
+          </div>
+          <div class="text-white font-medium text-xs">{{ log.action }}</div>
+          <p class="text-gray-400 text-[11px] mt-0.5">{{ log.details }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

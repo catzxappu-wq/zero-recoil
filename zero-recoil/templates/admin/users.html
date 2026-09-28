@@ -1,0 +1,62 @@
+{% extends "admin/base.html" %}
+
+{% block title %}USER MANAGEMENT — ZERO RECOIL ADMIN{% endblock %}
+{% block admin_title %}PLAYER ACCOUNTS & ACTIVITY{% endblock %}
+
+{% block admin_content %}
+<div class="space-y-8">
+  
+  <div>
+    <h1 class="font-heading font-black text-2xl text-white">REGISTERED PLAYERS</h1>
+    <p class="text-xs text-gray-400 font-esports">VIEW CUSTOMER ACCOUNTS, REGISTRATION TIMESTAMPS AND STATUS</p>
+  </div>
+
+  <div class="glass-card rounded-lg border border-[#1E1E1E] overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs font-esports">
+        <thead class="bg-[#080808] border-b border-[#1E1E1E] text-gray-400 uppercase tracking-wider">
+          <tr>
+            <th class="p-4">USER ID</th>
+            <th class="p-4">IN-GAME NAME</th>
+            <th class="p-4">EMAIL</th>
+            <th class="p-4">JOINED DATE</th>
+            <th class="p-4">SAVED SENS</th>
+            <th class="p-4">STATUS</th>
+            <th class="p-4 text-right">ACTION</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[#1E1E1E]">
+          {% for u in users %}
+          <tr class="hover:bg-[#120505] transition">
+            <td class="p-4 text-gray-400">#{{ u.id }}</td>
+            <td class="p-4 font-heading font-bold text-sm text-white">{{ u.name }}</td>
+            <td class="p-4 text-gray-300 font-body">{{ u.email }}</td>
+            <td class="p-4 text-gray-400">{{ u.created_at[:10] }}</td>
+            <td class="p-4 text-center">
+              <span class="bg-[#120505] text-[#FF1A1A] font-bold px-2 py-0.5 rounded border border-[#B00000]/40">
+                {{ u.saved_count }}
+              </span>
+            </td>
+            <td class="p-4">
+              <form action="{{ url_for('admin_toggle_user_status', id=u.id) }}" method="POST">
+                <button type="submit" class="px-2 py-0.5 rounded font-bold uppercase text-[10px] {% if u.status == 'active' %}bg-green-950 text-green-400 border border-green-700{% else %}bg-red-950 text-red-400 border border-red-700{% endif %}">
+                  {{ u.status }}
+                </button>
+              </form>
+            </td>
+            <td class="p-4 text-right">
+              <form action="{{ url_for('admin_delete_user', id=u.id) }}" method="POST" onsubmit="return confirm('Delete this user account?');">
+                <button type="submit" class="text-red-500 hover:text-red-300 p-1" title="Delete">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

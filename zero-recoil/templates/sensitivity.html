@@ -1,0 +1,1064 @@
+{% extends "base.html" %}
+
+{% block title %}Find Zero Recoil Sensitivity — ARMUGA X CATZX{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+  
+  <!-- Header Title & Tagline -->
+  <div class="text-center mb-8 sm:mb-12">
+    <div class="inline-flex items-center gap-2 bg-[#120505] border border-[#B00000]/60 px-4 py-1 rounded-full mb-3 shadow-[0_0_15px_rgba(255,26,26,0.2)]">
+      <i class="fa-solid fa-crosshairs text-[#FF1A1A] text-xs"></i>
+      <span class="text-xs font-esports font-bold tracking-widest text-gray-200">ZERO RECOIL ENGINE</span>
+    </div>
+    <h1 class="font-heading font-black text-3xl sm:text-5xl text-white tracking-wider">
+      FIND YOUR <span class="text-[#FF1A1A] glow-text-red">SENSITIVITY</span>
+    </h1>
+    <p class="font-esports text-sm sm:text-base text-gray-400 font-semibold tracking-widest mt-1">
+      GUN → BRAND → MODEL → RAM → PROCESSOR → UNLOCK → ZERO RECOIL
+    </p>
+  </div>
+
+  <!-- Progress Stepper Tracker -->
+  <div class="mb-10 max-w-4xl mx-auto">
+    <div class="flex items-center justify-between relative">
+      <!-- Background Connecting Line -->
+      <div class="absolute top-1/2 left-0 right-0 h-0.5 bg-[#1E1E1E] -translate-y-1/2 z-0"></div>
+      <div id="stepper-progress" class="absolute top-1/2 left-0 h-0.5 bg-[#FF1A1A] -translate-y-1/2 z-0 transition-all duration-300" style="width: 0%;"></div>
+
+      <!-- Step 1 Indicator -->
+      <div class="step-indicator relative z-10 flex flex-col items-center cursor-pointer" onclick="goToStep(1)">
+        <div id="step-dot-1" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#FF1A1A] text-white flex items-center justify-center font-heading font-bold text-xs sm:text-sm shadow-[0_0_12px_rgba(255,26,26,0.6)]">
+          1
+        </div>
+        <span class="text-[10px] sm:text-xs font-esports font-bold text-white mt-1.5 tracking-wider hidden sm:block">GUN</span>
+      </div>
+
+      <!-- Step 2 Indicator -->
+      <div class="step-indicator relative z-10 flex flex-col items-center cursor-pointer" onclick="goToStep(2)">
+        <div id="step-dot-2" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#0B0B0B] border border-[#1E1E1E] text-gray-400 flex items-center justify-center font-heading font-bold text-xs sm:text-sm">
+          2
+        </div>
+        <span class="text-[10px] sm:text-xs font-esports font-bold text-gray-400 mt-1.5 tracking-wider hidden sm:block">BRAND</span>
+      </div>
+
+      <!-- Step 3 Indicator -->
+      <div class="step-indicator relative z-10 flex flex-col items-center cursor-pointer" onclick="goToStep(3)">
+        <div id="step-dot-3" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#0B0B0B] border border-[#1E1E1E] text-gray-400 flex items-center justify-center font-heading font-bold text-xs sm:text-sm">
+          3
+        </div>
+        <span class="text-[10px] sm:text-xs font-esports font-bold text-gray-400 mt-1.5 tracking-wider hidden sm:block">MODEL</span>
+      </div>
+
+      <!-- Step 4 Indicator -->
+      <div class="step-indicator relative z-10 flex flex-col items-center cursor-pointer" onclick="goToStep(4)">
+        <div id="step-dot-4" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#0B0B0B] border border-[#1E1E1E] text-gray-400 flex items-center justify-center font-heading font-bold text-xs sm:text-sm">
+          4
+        </div>
+        <span class="text-[10px] sm:text-xs font-esports font-bold text-gray-400 mt-1.5 tracking-wider hidden sm:block">RAM</span>
+      </div>
+
+      <!-- Step 5 Indicator -->
+      <div class="step-indicator relative z-10 flex flex-col items-center cursor-pointer" onclick="goToStep(5)">
+        <div id="step-dot-5" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#0B0B0B] border border-[#1E1E1E] text-gray-400 flex items-center justify-center font-heading font-bold text-xs sm:text-sm">
+          5
+        </div>
+        <span class="text-[10px] sm:text-xs font-esports font-bold text-gray-400 mt-1.5 tracking-wider hidden sm:block">CPU</span>
+      </div>
+
+      <!-- Step 6 Indicator -->
+      <div class="step-indicator relative z-10 flex flex-col items-center cursor-pointer" onclick="goToStep(6)">
+        <div id="step-dot-6" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#0B0B0B] border border-[#1E1E1E] text-gray-400 flex items-center justify-center font-heading font-bold text-xs sm:text-sm">
+          6
+        </div>
+        <span class="text-[10px] sm:text-xs font-esports font-bold text-gray-400 mt-1.5 tracking-wider hidden sm:block">UNLOCK</span>
+      </div>
+
+      <!-- Step 7 Indicator -->
+      <div class="step-indicator relative z-10 flex flex-col items-center">
+        <div id="step-dot-7" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#0B0B0B] border border-[#1E1E1E] text-gray-400 flex items-center justify-center font-heading font-bold text-xs sm:text-sm">
+          ⚡
+        </div>
+        <span class="text-[10px] sm:text-xs font-esports font-bold text-gray-400 mt-1.5 tracking-wider hidden sm:block">SETTINGS</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SELECTION SUMMARY BAR (Sticky on top of wizard once items are chosen) -->
+  <div id="wizard-summary-bar" class="hidden mb-6 p-4 rounded bg-[#0B0B0B] border border-[#1E1E1E] flex flex-wrap items-center justify-between gap-3 text-xs font-esports">
+    <div class="flex flex-wrap items-center gap-3">
+      <div id="sum-gun" class="text-white hidden"><span class="text-gray-400">GUN:</span> <strong class="text-[#FF1A1A] font-heading" id="sum-gun-val">-</strong></div>
+      <div id="sum-brand" class="text-white hidden"><span class="text-gray-400">BRAND:</span> <strong class="text-white" id="sum-brand-val">-</strong></div>
+      <div id="sum-model" class="text-white hidden"><span class="text-gray-400">MODEL:</span> <strong class="text-[#FF1A1A]" id="sum-model-val">-</strong></div>
+      <div id="sum-ram" class="text-white hidden"><span class="text-gray-400">RAM:</span> <strong class="text-white" id="sum-ram-val">-</strong></div>
+      <div id="sum-cpu" class="text-white hidden"><span class="text-gray-400">CPU:</span> <strong class="text-gray-300" id="sum-cpu-val">-</strong></div>
+    </div>
+    <button onclick="resetWizard()" class="text-gray-400 hover:text-red-400 flex items-center gap-1">
+      <i class="fa-solid fa-rotate-left"></i> RESTART
+    </button>
+  </div>
+
+  <!-- STEP 1: SELECT GUN -->
+  <div id="step-1-content" class="wizard-step">
+    <div class="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+      <div>
+        <h2 class="font-heading font-bold text-xl sm:text-2xl text-white">
+          STEP 1: <span class="text-[#FF1A1A]">SELECT YOUR GUN</span>
+        </h2>
+        <p class="text-xs text-gray-400 font-esports tracking-wider">CHOOSE THE WEAPON YOU WANT TO CALIBRATE</p>
+      </div>
+
+      <!-- Gun search input -->
+      <div class="relative w-full sm:w-64">
+        <input type="text" id="gun-filter-input" placeholder="Search gun (e.g. MP40)..." 
+               class="w-full bg-[#0B0B0B] border border-[#1E1E1E] focus:border-[#FF1A1A] text-white text-xs rounded px-3 py-2">
+      </div>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="flex flex-wrap items-center gap-2 mb-6 border-b border-[#1E1E1E] pb-3 text-xs font-esports font-bold tracking-wider">
+      <button onclick="filterGunCategory('all')" class="gun-cat-tab active px-3 py-1.5 rounded bg-[#FF1A1A] text-white" data-cat="all">ALL GUNS</button>
+      {% for cat in categories %}
+      <button onclick="filterGunCategory('{{ cat.slug }}')" class="gun-cat-tab px-3 py-1.5 rounded bg-[#0B0B0B] text-gray-300 hover:text-white border border-[#1E1E1E]" data-cat="{{ cat.slug }}">
+        {{ cat.name }}
+      </button>
+      {% endfor %}
+    </div>
+
+    <!-- Guns Grid -->
+    <div id="guns-wizard-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+      {% for gun in all_guns %}
+      <div class="gun-wizard-card glass-card rounded p-3 cursor-pointer border border-[#1E1E1E] hover:border-[#FF1A1A] transition group text-center"
+           data-gun-id="{{ gun.id }}" data-gun-slug="{{ gun.slug }}" data-gun-name="{{ gun.name }}" data-gun-cat="{{ gun.category_slug }}"
+           onclick="selectGun({{ gun.id }}, '{{ gun.name }}', '{{ gun.slug }}')">
+        <div class="text-[9px] font-esports text-gray-400 font-bold mb-1">{{ gun.category_name }}</div>
+        <div class="h-20 bg-[#050505] rounded flex items-center justify-center p-1 mb-2 group-hover:scale-105 transition-transform">
+          {% if gun.image %}
+            <img src="{{ gun.image }}" alt="{{ gun.name }}" class="max-h-full object-contain">
+          {% else %}
+            <i class="fa-solid fa-crosshairs text-2xl text-stone-600"></i>
+          {% endif %}
+        </div>
+        <h4 class="font-heading font-bold text-xs text-white group-hover:text-[#FF1A1A] transition">{{ gun.name }}</h4>
+        <div class="text-[9px] text-gray-500 mt-1">DMG {{ gun.damage }} | ROF {{ gun.fire_rate }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- STEP 2: SELECT DEVICE BRAND -->
+  <div id="step-2-content" class="wizard-step hidden">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="font-heading font-bold text-xl sm:text-2xl text-white">
+          STEP 2: <span class="text-[#FF1A1A]">SELECT DEVICE BRAND</span>
+        </h2>
+        <p class="text-xs text-gray-400 font-esports tracking-wider">CHOOSE THE MANUFACTURER OF YOUR PHONE</p>
+      </div>
+      <button onclick="goToStep(1)" class="btn-esports-outline text-xs py-1.5 px-3">
+        ← BACK TO GUNS
+      </button>
+    </div>
+
+    <!-- Brands Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+      {% for brand in all_brands %}
+      <div class="brand-wizard-card glass-card rounded p-4 cursor-pointer border border-[#1E1E1E] hover:border-[#FF1A1A] transition text-center group"
+           onclick="selectBrand({{ brand.id }}, '{{ brand.name }}')">
+        <div class="w-10 h-10 mx-auto rounded bg-[#120505] border border-[#B00000]/40 flex items-center justify-center text-lg text-[#FF1A1A] mb-2 group-hover:scale-110 transition-transform">
+          <i class="fa-solid {{ brand.logo or 'fa-mobile' }}"></i>
+        </div>
+        <h4 class="font-heading font-bold text-xs sm:text-sm text-white group-hover:text-[#FF1A1A]">{{ brand.name }}</h4>
+        <div class="text-[9px] font-esports text-gray-400 mt-1">{{ brand.device_count }} MODELS</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- STEP 3: SELECT DEVICE MODEL -->
+  <div id="step-3-content" class="wizard-step hidden">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="font-heading font-bold text-xl sm:text-2xl text-white">
+          STEP 3: <span class="text-[#FF1A1A]">SELECT YOUR DEVICE MODEL</span>
+        </h2>
+        <p class="text-xs text-gray-400 font-esports tracking-wider" id="model-step-subtitle">SELECT YOUR PHONE MODEL</p>
+      </div>
+      <button onclick="goToStep(2)" class="btn-esports-outline text-xs py-1.5 px-3">
+        ← BACK TO BRANDS
+      </button>
+    </div>
+
+    <!-- Container where models for selected brand are dynamically loaded -->
+    <div id="models-wizard-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div class="col-span-full text-center py-10 text-gray-500 font-esports">Loading models...</div>
+    </div>
+  </div>
+
+  <!-- STEP 4: SELECT RAM -->
+  <div id="step-4-content" class="wizard-step hidden">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="font-heading font-bold text-xl sm:text-2xl text-white">
+          STEP 4: <span class="text-[#FF1A1A]">SELECT YOUR RAM</span>
+        </h2>
+        <p class="text-xs text-gray-400 font-esports tracking-wider">SHOWING ONLY CONFIGURATIONS AVAILABLE FOR THIS PHONE</p>
+      </div>
+      <button onclick="goToStep(3)" class="btn-esports-outline text-xs py-1.5 px-3">
+        ← BACK TO MODEL
+      </button>
+    </div>
+
+    <!-- RAM selection cards -->
+    <div id="ram-wizard-container" class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+      <!-- Injected via JavaScript based on device -->
+    </div>
+  </div>
+
+  <!-- STEP 5: SELECT PROCESSOR -->
+  <div id="step-5-content" class="wizard-step hidden">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="font-heading font-bold text-xl sm:text-2xl text-white">
+          STEP 5: <span class="text-[#FF1A1A]">CONFIRM PROCESSOR</span>
+        </h2>
+        <p class="text-xs text-gray-400 font-esports tracking-wider">AUTOMATICALLY RETRIEVED FROM OUR HARDWARE DATABASE</p>
+      </div>
+      <button onclick="goToStep(4)" class="btn-esports-outline text-xs py-1.5 px-3">
+        ← BACK TO RAM
+      </button>
+    </div>
+
+    <div class="max-w-xl mx-auto glass-card rounded p-6 border border-[#B00000]/40 text-center">
+      <div class="w-16 h-16 rounded-full bg-[#120505] border border-[#FF1A1A] mx-auto flex items-center justify-center text-2xl text-[#FF1A1A] mb-4 shadow-[0_0_15px_rgba(255,26,26,0.3)]">
+        <i class="fa-solid fa-microchip"></i>
+      </div>
+      <div class="text-xs font-esports text-gray-400 tracking-wider">DETECTED CHIPSET FOR YOUR DEVICE</div>
+      <h3 id="detected-processor-name" class="font-heading font-black text-xl sm:text-2xl text-white mt-1 mb-2">-</h3>
+      <p class="text-xs text-gray-400 font-body mb-6">
+        ARMUGA X CATZX calculates touch sampling jitter and frame latency specifically for this processor.
+      </p>
+
+      <button onclick="confirmProcessorAndProceed()" class="btn-esports-red text-sm py-3 px-8 w-full sm:w-auto shadow-[0_0_20px_rgba(255,26,26,0.5)]">
+        PROCEED TO SOCIAL UNLOCK <i class="fa-solid fa-arrow-right ml-1"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 6: SOCIAL MEDIA UNLOCK -->
+  <div id="step-6-content" class="wizard-step hidden">
+    <div class="max-w-2xl mx-auto text-center mb-8">
+      <div class="w-14 h-14 rounded-full bg-[#120505] border-2 border-[#FF1A1A] mx-auto flex items-center justify-center text-2xl text-[#FF1A1A] mb-4 shadow-[0_0_20px_rgba(255,26,26,0.5)]">
+        <i class="fa-solid fa-lock" id="lock-icon-status"></i>
+      </div>
+      <h2 class="font-heading font-black text-2xl sm:text-3xl text-white tracking-wider">
+        🔒 SENSITIVITY LOCKED
+      </h2>
+      <p class="text-xs sm:text-sm text-gray-300 font-body max-w-md mx-auto mt-2 leading-relaxed">
+        Follow our social pages and subscribe to unlock your ZERO RECOIL sensitivity settings.
+      </p>
+    </div>
+
+    <!-- 3 Social Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-8">
+      
+      <!-- Instagram 1 -->
+      <div class="glass-card rounded p-5 border border-[#1E1E1E] text-center flex flex-col justify-between" id="social-card-1">
+        <div>
+          <div class="w-12 h-12 rounded bg-[#120505] border border-[#B00000]/40 flex items-center justify-center text-xl text-[#FF1A1A] mx-auto mb-3">
+            <i class="fa-brands fa-instagram"></i>
+          </div>
+          <div class="font-heading font-bold text-xs sm:text-sm text-white mb-1" id="social-title-1">INSTAGRAM 01</div>
+          <p class="text-[11px] text-gray-400 font-esports mb-4" id="social-sub-1">FOLLOW ARMUGA ON INSTAGRAM</p>
+        </div>
+        <div>
+          <a id="social-link-1" href="https://instagram.com" target="_blank" onclick="completeSocialStep(1)" 
+             class="btn-esports-red text-xs py-2 px-4 w-full justify-center">
+            <i class="fa-brands fa-instagram"></i> FOLLOW
+          </a>
+          <div id="social-done-1" class="hidden text-xs font-esports font-bold text-[#FF1A1A] py-2">
+            ✓ COMPLETED
+          </div>
+        </div>
+      </div>
+
+      <!-- Instagram 2 -->
+      <div class="glass-card rounded p-5 border border-[#1E1E1E] text-center flex flex-col justify-between" id="social-card-2">
+        <div>
+          <div class="w-12 h-12 rounded bg-[#120505] border border-[#B00000]/40 flex items-center justify-center text-xl text-[#FF1A1A] mx-auto mb-3">
+            <i class="fa-brands fa-instagram"></i>
+          </div>
+          <div class="font-heading font-bold text-xs sm:text-sm text-white mb-1" id="social-title-2">INSTAGRAM 02</div>
+          <p class="text-[11px] text-gray-400 font-esports mb-4" id="social-sub-2">FOLLOW CATZX ON INSTAGRAM</p>
+        </div>
+        <div>
+          <a id="social-link-2" href="https://instagram.com" target="_blank" onclick="completeSocialStep(2)" 
+             class="btn-esports-red text-xs py-2 px-4 w-full justify-center">
+            <i class="fa-brands fa-instagram"></i> FOLLOW
+          </a>
+          <div id="social-done-2" class="hidden text-xs font-esports font-bold text-[#FF1A1A] py-2">
+            ✓ COMPLETED
+          </div>
+        </div>
+      </div>
+
+      <!-- YouTube -->
+      <div class="glass-card rounded p-5 border border-[#1E1E1E] text-center flex flex-col justify-between" id="social-card-3">
+        <div>
+          <div class="w-12 h-12 rounded bg-[#120505] border border-[#B00000]/40 flex items-center justify-center text-xl text-[#FF1A1A] mx-auto mb-3">
+            <i class="fa-brands fa-youtube"></i>
+          </div>
+          <div class="font-heading font-bold text-xs sm:text-sm text-white mb-1" id="social-title-3">YOUTUBE</div>
+          <p class="text-[11px] text-gray-400 font-esports mb-4" id="social-sub-3">SUBSCRIBE TO OUR YOUTUBE</p>
+        </div>
+        <div>
+          <a id="social-link-3" href="https://youtube.com" target="_blank" onclick="completeSocialStep(3)" 
+             class="btn-esports-red text-xs py-2 px-4 w-full justify-center">
+            <i class="fa-brands fa-youtube"></i> SUBSCRIBE
+          </a>
+          <div id="social-done-3" class="hidden text-xs font-esports font-bold text-[#FF1A1A] py-2">
+            ✓ COMPLETED
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Unlock button -->
+    <div class="text-center max-w-md mx-auto">
+      <button id="btn-unlock-sensitivity" disabled onclick="unlockSensitivityResult()"
+              class="w-full py-3.5 px-6 rounded font-heading font-black text-sm uppercase tracking-wider transition bg-zinc-800 text-gray-500 cursor-not-allowed">
+        <i class="fa-solid fa-lock mr-2"></i> COMPLETE ALL 3 TO UNLOCK
+      </button>
+      <div class="text-[10px] text-gray-500 mt-2 font-esports">
+        * Clicking follow/subscribe will open official channels and mark confirmation.
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: ZERO RECOIL SENSITIVITY RESULT (Or Device Not Available) -->
+  <div id="step-7-content" class="wizard-step hidden">
+    
+    <!-- IF RESULT FOUND -->
+    <div id="result-found-container" class="hidden">
+      
+      <!-- Top banner summary -->
+      <div class="glass-card rounded-lg p-6 border-2 border-[#FF1A1A] shadow-[0_0_30px_rgba(255,26,26,0.3)] mb-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1E1E1E] pb-4 mb-4">
+          <div>
+            <div class="inline-flex items-center gap-2 text-xs font-esports font-bold text-[#FF1A1A] uppercase tracking-wider mb-1">
+              <span class="live-pulse-dot"></span> ZERO RECOIL CALIBRATED
+            </div>
+            <h2 class="font-heading font-black text-2xl sm:text-4xl text-white tracking-wider">
+              ZERO RECOIL SETTINGS
+            </h2>
+          </div>
+          
+          <!-- Copy / Save / Share Actions -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="btn-copy-settings" class="btn-esports-red text-xs py-2 px-4">
+              <i class="fa-solid fa-copy"></i> COPY SETTINGS
+            </button>
+            <button id="btn-save-settings" class="btn-esports-outline text-xs py-2 px-4">
+              <i class="fa-regular fa-bookmark"></i> SAVE
+            </button>
+            <button id="btn-share-settings" class="btn-esports-outline text-xs py-2 px-4">
+              <i class="fa-solid fa-share-nodes"></i> SHARE
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Badges: Gun, Device, RAM, Processor -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-esports">
+          <div class="bg-[#050505] p-3 rounded border border-[#1E1E1E]">
+            <div class="text-gray-400">GUN</div>
+            <div id="res-gun-name" class="font-heading font-bold text-sm sm:text-base text-[#FF1A1A] truncate">-</div>
+          </div>
+          <div class="bg-[#050505] p-3 rounded border border-[#1E1E1E]">
+            <div class="text-gray-400">DEVICE</div>
+            <div id="res-device-name" class="font-heading font-bold text-sm sm:text-base text-white truncate">-</div>
+          </div>
+          <div class="bg-[#050505] p-3 rounded border border-[#1E1E1E]">
+            <div class="text-gray-400">RAM</div>
+            <div id="res-ram-val" class="font-heading font-bold text-sm sm:text-base text-white truncate">-</div>
+          </div>
+          <div class="bg-[#050505] p-3 rounded border border-[#1E1E1E]">
+            <div class="text-gray-400">PROCESSOR</div>
+            <div id="res-processor-val" class="font-heading font-bold text-sm sm:text-base text-gray-300 truncate">-</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 LARGE SENSITIVITY METRIC CARDS -->
+      <div class="text-center mb-4">
+        <h3 class="font-heading font-bold text-lg sm:text-xl text-white tracking-wider">
+          PRIMARY SENSITIVITY VALUES
+        </h3>
+        <p class="text-xs text-gray-400 font-esports tracking-wider">ENTER EXACT NUMBERS IN FREE FIRE SENSITIVITY MENU</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-8">
+        
+        <!-- GENERAL -->
+        <div class="sens-meter-card rounded p-4 text-center">
+          <div class="text-[11px] font-esports font-bold text-gray-400 tracking-wider mb-1">GENERAL</div>
+          <div id="val-general" class="sens-number text-[#FF1A1A]">-</div>
+          <div class="text-[9px] text-gray-500 font-esports mt-2">DRAG LOOK SPEED</div>
+        </div>
+
+        <!-- RED DOT -->
+        <div class="sens-meter-card rounded p-4 text-center">
+          <div class="text-[11px] font-esports font-bold text-gray-400 tracking-wider mb-1">RED DOT</div>
+          <div id="val-reddot" class="sens-number text-[#FF1A1A]">-</div>
+          <div class="text-[9px] text-gray-500 font-esports mt-2">CLOSE-RANGE SNAP</div>
+        </div>
+
+        <!-- 2X SCOPE -->
+        <div class="sens-meter-card rounded p-4 text-center">
+          <div class="text-[11px] font-esports font-bold text-gray-400 tracking-wider mb-1">2X SCOPE</div>
+          <div id="val-2x" class="sens-number text-white">-</div>
+          <div class="text-[9px] text-gray-500 font-esports mt-2">MID-RANGE TRACK</div>
+        </div>
+
+        <!-- 4X SCOPE -->
+        <div class="sens-meter-card rounded p-4 text-center">
+          <div class="text-[11px] font-esports font-bold text-gray-400 tracking-wider mb-1">4X SCOPE</div>
+          <div id="val-4x" class="sens-number text-white">-</div>
+          <div class="text-[9px] text-gray-500 font-esports mt-2">LONG-RANGE SPRAY</div>
+        </div>
+
+        <!-- SNIPER SCOPE -->
+        <div class="sens-meter-card rounded p-4 text-center">
+          <div class="text-[11px] font-esports font-bold text-gray-400 tracking-wider mb-1">SNIPER SCOPE</div>
+          <div id="val-sniper" class="sens-number text-white">-</div>
+          <div class="text-[9px] text-gray-500 font-esports mt-2">AWM / KAR98K</div>
+        </div>
+
+        <!-- FREE LOOK -->
+        <div class="sens-meter-card rounded p-4 text-center">
+          <div class="text-[11px] font-esports font-bold text-gray-400 tracking-wider mb-1">FREE LOOK</div>
+          <div id="val-freelook" class="sens-number text-white">-</div>
+          <div class="text-[9px] text-gray-500 font-esports mt-2">360° RADIAL EYE</div>
+        </div>
+
+      </div>
+
+      <!-- ADDITIONAL OPTIONAL SETTINGS CARD -->
+      <div class="glass-card rounded p-6 border border-[#1E1E1E] mb-8">
+        <h4 class="font-heading font-bold text-base text-white mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-[#FF1A1A]"></i> ADVANCED HUD & CONTROL TUNING
+        </h4>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-esports">
+          <div class="p-3 bg-[#050505] rounded border border-[#1E1E1E]">
+            <span class="text-gray-400 block">FIRE BUTTON SIZE</span>
+            <span id="extra-firebutton" class="text-lg font-heading font-bold text-[#FF1A1A] block mt-0.5">45%</span>
+          </div>
+          <div class="p-3 bg-[#050505] rounded border border-[#1E1E1E]">
+            <span class="text-gray-400 block">DEVICE DPI</span>
+            <span id="extra-dpi" class="text-lg font-heading font-bold text-white block mt-0.5">411</span>
+          </div>
+          <div class="p-3 bg-[#050505] rounded border border-[#1E1E1E]">
+            <span class="text-gray-400 block">AIM PRECISION</span>
+            <span id="extra-aim" class="text-base font-heading font-bold text-white block mt-0.5 truncate">Default</span>
+          </div>
+          <div class="p-3 bg-[#050505] rounded border border-[#1E1E1E]">
+            <span class="text-gray-400 block">GRAPHICS</span>
+            <span id="extra-graphics" class="text-sm font-heading font-bold text-gray-300 block mt-0.5 truncate">Smooth / Ultra</span>
+          </div>
+          <div class="p-3 bg-[#050505] rounded border border-[#1E1E1E]">
+            <span class="text-gray-400 block">HIGH FPS</span>
+            <span id="extra-fps" class="text-base font-heading font-bold text-[#FF1A1A] block mt-0.5">HIGH</span>
+          </div>
+          <div class="p-3 bg-[#050505] rounded border border-[#1E1E1E]">
+            <span class="text-gray-400 block">CALIBRATED BY</span>
+            <span id="extra-updated-by" class="text-base font-heading font-bold text-white block mt-0.5">ARMUGA</span>
+          </div>
+        </div>
+
+        <div id="extra-controls-box" class="mt-4 p-3 bg-[#050505] rounded border border-[#1E1E1E] text-xs font-body text-gray-300">
+          <strong class="text-[#FF1A1A] font-esports">PRO DRAG TIP:</strong> <span id="extra-controls">-</span>
+        </div>
+      </div>
+
+      <!-- Action Bottom Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-4 p-4 rounded bg-[#0B0B0B] border border-[#1E1E1E]">
+        <button onclick="resetWizard()" class="btn-esports-outline text-xs py-2 px-4">
+          <i class="fa-solid fa-rotate-left"></i> CALIBRATE ANOTHER CONFIGURATION
+        </button>
+        <a href="{{ url_for('guns_list') }}" class="text-xs font-esports font-bold text-gray-400 hover:text-white">
+          EXPLORE GUN STATS & TIERS →
+        </a>
+      </div>
+
+    </div>
+
+    <!-- IF RESULT NOT AVAILABLE YET (Strict user instruction #36: Do NOT fabricate fake numbers) -->
+    <div id="result-missing-container" class="hidden">
+      <div class="max-w-xl mx-auto glass-card rounded-lg p-8 border border-yellow-700/50 text-center shadow-2xl">
+        <div class="w-16 h-16 rounded-full bg-[#1e1305] border border-yellow-500 mx-auto flex items-center justify-center text-2xl text-yellow-500 mb-4">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h2 class="font-heading font-bold text-xl sm:text-2xl text-white tracking-wider mb-2">
+          ZERO RECOIL SENSITIVITY FOR THIS DEVICE IS NOT AVAILABLE YET.
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 font-body mb-6 leading-relaxed">
+          ARMUGA and CATZX only publish sensitivities that have undergone competitive tournament testing. We have not completed the recoil benchmarks for this exact configuration yet.
+        </p>
+
+        <!-- Current Configuration Preview -->
+        <div class="p-3 bg-[#050505] rounded border border-[#1E1E1E] text-xs font-esports mb-6 text-left space-y-1">
+          <div><span class="text-gray-500">GUN:</span> <strong class="text-white" id="missing-gun">-</strong></div>
+          <div><span class="text-gray-500">DEVICE:</span> <strong class="text-white" id="missing-device">-</strong></div>
+          <div><span class="text-gray-500">RAM:</span> <strong class="text-white" id="missing-ram">-</strong></div>
+          <div><span class="text-gray-500">PROCESSOR:</span> <strong class="text-white" id="missing-cpu">-</strong></div>
+        </div>
+
+        <button onclick="openRequestDeviceModal()" class="btn-esports-red text-sm py-3 px-8 shadow-[0_0_20px_rgba(255,26,26,0.5)]">
+          <i class="fa-solid fa-paper-plane"></i> REQUEST THIS DEVICE
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- REQUEST MISSING DEVICE MODAL -->
+<div id="request-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+  <div class="glass-card rounded-lg border border-[#FF1A1A] p-6 max-w-md w-full">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-heading font-bold text-lg text-white">
+        REQUEST DEVICE SENSITIVITY
+      </h3>
+      <button onclick="closeRequestDeviceModal()" class="text-gray-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+
+    <form id="request-device-form" onsubmit="submitDeviceRequest(event)" class="space-y-4 text-xs font-esports">
+      <div>
+        <label class="block text-gray-400 mb-1">BRAND</label>
+        <input type="text" id="req-brand" name="brand" readonly class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-bold">
+      </div>
+      <div>
+        <label class="block text-gray-400 mb-1">MODEL</label>
+        <input type="text" id="req-model" name="model" readonly class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-bold">
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-gray-400 mb-1">RAM</label>
+          <input type="text" id="req-ram" name="ram" readonly class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white">
+        </div>
+        <div>
+          <label class="block text-gray-400 mb-1">PROCESSOR</label>
+          <input type="text" id="req-cpu" name="processor" readonly class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white">
+        </div>
+      </div>
+      <div>
+        <label class="block text-gray-400 mb-1">YOUR EMAIL (FOR NOTIFICATION ONCE CALIBRATED)</label>
+        <input type="email" id="req-email" name="user_email" required placeholder="player@gmail.com" 
+               value="{% if current_user %}{{ current_user.email }}{% endif %}"
+               class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2 text-white font-body">
+      </div>
+      <div>
+        <label class="block text-gray-400 mb-1">ADDITIONAL NOTES (GUN, PREFERRED DPI)</label>
+        <textarea id="req-notes" name="notes" rows="2" placeholder="e.g. Please test MP40 and M1887 headshot drag sensitivity..."
+                  class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2 text-white font-body"></textarea>
+      </div>
+
+      <button type="submit" class="w-full btn-esports-red py-2.5 text-sm tracking-wider">
+        SUBMIT REQUEST TO ARMUGA & CATZX
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Wizard State Management
+const wizardState = {
+  currentStep: 1,
+  gunId: null,
+  gunName: null,
+  gunSlug: null,
+  brandId: null,
+  brandName: null,
+  deviceId: null,
+  deviceName: null,
+  ram: null,
+  processor: null,
+  socialFollowed: { 1: false, 2: false, 3: false },
+  sensitivityData: null
+};
+
+// URL query parameter parsing on load
+document.addEventListener('DOMContentLoaded', async () => {
+  // Load social link configurations from backend
+  loadSocialLinks();
+
+  const params = new URLSearchParams(window.location.search);
+  const qGun = params.get('gun');
+  const qDev = params.get('device');
+  const qRam = params.get('ram');
+
+  if (qGun) {
+    const card = document.querySelector(`.gun-wizard-card[data-gun-slug="${qGun}"]`);
+    if (card) {
+      selectGun(card.dataset.gunId, card.dataset.gunName, card.dataset.gunSlug, false);
+    }
+  }
+
+  if (qDev) {
+    // Fetch device details
+    try {
+      const res = await fetch(`/api/device/${qDev}/details`);
+      const dev = await res.json();
+      if (dev && dev.id) {
+        wizardState.brandId = dev.brand_id;
+        wizardState.brandName = dev.brand_name;
+        wizardState.deviceId = dev.id;
+        wizardState.deviceName = dev.model_name;
+        wizardState.processor = dev.processor;
+        updateSummaryBar();
+        
+        if (qRam) {
+          wizardState.ram = qRam;
+          updateSummaryBar();
+          if (wizardState.gunId) {
+            goToStep(5);
+            return;
+          }
+        }
+      }
+    } catch(e) {}
+  }
+});
+
+async function loadSocialLinks() {
+  try {
+    const res = await fetch('/api/social-links');
+    const links = await res.json();
+    links.forEach((l, index) => {
+      const i = index + 1;
+      const titleEl = document.getElementById(`social-title-${i}`);
+      const subEl = document.getElementById(`social-sub-${i}`);
+      const linkEl = document.getElementById(`social-link-${i}`);
+      const cardEl = document.getElementById(`social-card-${i}`);
+
+      if (!l.enabled) {
+        if (cardEl) cardEl.classList.add('hidden');
+        wizardState.socialFollowed[i] = true; // Auto-pass if admin disabled
+      } else {
+        if (titleEl) titleEl.textContent = l.title;
+        if (subEl) subEl.textContent = l.subtitle;
+        if (linkEl) {
+          linkEl.href = l.url;
+          linkEl.innerHTML = `<i class="fa-brands fa-${l.icon}"></i> ${l.button_text}`;
+        }
+      }
+    });
+    checkUnlockReady();
+  } catch (err) {
+    console.error("Error loading social links:", err);
+  }
+}
+
+function updateSummaryBar() {
+  const bar = document.getElementById('wizard-summary-bar');
+  if (!wizardState.gunName && !wizardState.brandName) {
+    bar.classList.add('hidden');
+    return;
+  }
+  bar.classList.remove('hidden');
+
+  if (wizardState.gunName) {
+    document.getElementById('sum-gun').classList.remove('hidden');
+    document.getElementById('sum-gun-val').textContent = wizardState.gunName;
+  }
+  if (wizardState.brandName) {
+    document.getElementById('sum-brand').classList.remove('hidden');
+    document.getElementById('sum-brand-val').textContent = wizardState.brandName;
+  }
+  if (wizardState.deviceName) {
+    document.getElementById('sum-model').classList.remove('hidden');
+    document.getElementById('sum-model-val').textContent = wizardState.deviceName;
+  }
+  if (wizardState.ram) {
+    document.getElementById('sum-ram').classList.remove('hidden');
+    document.getElementById('sum-ram-val').textContent = wizardState.ram;
+  }
+  if (wizardState.processor) {
+    document.getElementById('sum-cpu').classList.remove('hidden');
+    document.getElementById('sum-cpu-val').textContent = wizardState.processor;
+  }
+}
+
+function goToStep(stepNum) {
+  // Basic validation guards
+  if (stepNum > 1 && !wizardState.gunId) {
+    showToast('Please select a gun first', 'danger');
+    return;
+  }
+  if (stepNum > 2 && !wizardState.brandId) {
+    showToast('Please select a brand', 'danger');
+    return;
+  }
+  if (stepNum > 3 && !wizardState.deviceId) {
+    showToast('Please select a device model', 'danger');
+    return;
+  }
+  if (stepNum > 4 && !wizardState.ram) {
+    showToast('Please select your RAM configuration', 'danger');
+    return;
+  }
+
+  wizardState.currentStep = stepNum;
+
+  // Hide all step content
+  document.querySelectorAll('.wizard-step').forEach(el => el.classList.add('hidden'));
+  const currentContent = document.getElementById(`step-${stepNum}-content`);
+  if (currentContent) currentContent.classList.remove('hidden');
+
+  // Update Progress Stepper Tracker
+  const percent = ((stepNum - 1) / 6) * 100;
+  document.getElementById('stepper-progress').style.width = `${percent}%`;
+
+  for (let i = 1; i <= 7; i++) {
+    const dot = document.getElementById(`step-dot-${i}`);
+    if (dot) {
+      if (i <= stepNum) {
+        dot.className = "w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#FF1A1A] text-white flex items-center justify-center font-heading font-bold text-xs sm:text-sm shadow-[0_0_12px_rgba(255,26,26,0.6)]";
+      } else {
+        dot.className = "w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#0B0B0B] border border-[#1E1E1E] text-gray-400 flex items-center justify-center font-heading font-bold text-xs sm:text-sm";
+      }
+    }
+  }
+
+  window.scrollTo({ top: 120, behavior: 'smooth' });
+}
+
+// Step 1: Select Gun
+function selectGun(id, name, slug, advance = true) {
+  wizardState.gunId = id;
+  wizardState.gunName = name;
+  wizardState.gunSlug = slug;
+  updateSummaryBar();
+
+  document.querySelectorAll('.gun-wizard-card').forEach(c => {
+    c.classList.remove('border-[#FF1A1A]', 'bg-[#1a0505]');
+    if (c.dataset.gunId == id) {
+      c.classList.add('border-[#FF1A1A]', 'bg-[#1a0505]');
+    }
+  });
+
+  if (advance) {
+    goToStep(2);
+  }
+}
+
+// Gun filter & search
+function filterGunCategory(catSlug) {
+  document.querySelectorAll('.gun-cat-tab').forEach(t => {
+    t.classList.remove('bg-[#FF1A1A]', 'text-white');
+    t.classList.add('bg-[#0B0B0B]', 'text-gray-300');
+    if (t.dataset.cat === catSlug) {
+      t.classList.remove('bg-[#0B0B0B]', 'text-gray-300');
+      t.classList.add('bg-[#FF1A1A]', 'text-white');
+    }
+  });
+
+  document.querySelectorAll('.gun-wizard-card').forEach(card => {
+    if (catSlug === 'all' || card.dataset.gunCat === catSlug) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
+document.getElementById('gun-filter-input')?.addEventListener('input', (e) => {
+  const q = e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.gun-wizard-card').forEach(card => {
+    const name = card.dataset.gunName.toLowerCase();
+    if (name.includes(q)) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+});
+
+// Step 2: Select Brand
+async function selectBrand(brandId, brandName) {
+  wizardState.brandId = brandId;
+  wizardState.brandName = brandName;
+  updateSummaryBar();
+
+  document.getElementById('model-step-subtitle').textContent = `SHOWING MODELS FOR ${brandName.toUpperCase()}`;
+
+  // Fetch models for this brand
+  const container = document.getElementById('models-wizard-container');
+  container.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500 font-esports">Loading models...</div>';
+  
+  try {
+    const res = await fetch(`/api/devices?brand_id=${brandId}`);
+    const models = await res.json();
+
+    if (models.length === 0) {
+      container.innerHTML = `
+        <div class="col-span-full text-center py-10">
+          <p class="text-sm text-gray-400 font-esports">No models added for ${brandName} yet.</p>
+          <button onclick="openRequestDeviceModal()" class="btn-esports-red text-xs mt-3 py-2 px-4">
+            REQUEST A ${brandName.toUpperCase()} MODEL
+          </button>
+        </div>
+      `;
+    } else {
+      container.innerHTML = models.map(m => `
+        <div class="glass-card rounded p-4 border border-[#1E1E1E] hover:border-[#FF1A1A] cursor-pointer transition"
+             onclick="selectModel(${m.id}, '${m.model_name}', '${m.processor}')">
+          <div class="flex items-start justify-between">
+            <h4 class="font-heading font-bold text-sm sm:text-base text-white hover:text-[#FF1A1A]">${m.model_name}</h4>
+            <span class="text-[10px] bg-[#120505] text-[#FF1A1A] px-2 py-0.5 rounded font-esports border border-[#B00000]/40">${m.refresh_rate}</span>
+          </div>
+          <div class="mt-3 text-xs text-gray-400 space-y-1">
+            <div class="flex items-center gap-1.5"><i class="fa-solid fa-microchip text-red-500 text-[10px]"></i> <span class="truncate">${m.processor}</span></div>
+            <div class="flex items-center gap-1.5"><i class="fa-solid fa-memory text-red-500 text-[10px]"></i> <span>${m.ram_list || 'Various'}</span></div>
+          </div>
+        </div>
+      `).join('');
+    }
+  } catch (err) {
+    container.innerHTML = '<div class="col-span-full text-center py-10 text-red-400">Error loading models</div>';
+  }
+
+  goToStep(3);
+}
+
+// Step 3: Select Model
+async function selectModel(devId, devName, proc) {
+  wizardState.deviceId = devId;
+  wizardState.deviceName = devName;
+  wizardState.processor = proc;
+  updateSummaryBar();
+
+  // Fetch RAM options for this device
+  const container = document.getElementById('ram-wizard-container');
+  container.innerHTML = '<div class="col-span-full text-center py-6 text-gray-500">Loading RAM configurations...</div>';
+
+  try {
+    const res = await fetch(`/api/device/${devId}/details`);
+    const details = await res.json();
+    
+    wizardState.processor = details.processor || proc;
+    document.getElementById('detected-processor-name').textContent = wizardState.processor;
+
+    const rams = details.rams && details.rams.length > 0 ? details.rams : ["4 GB", "6 GB", "8 GB", "12 GB"];
+    
+    container.innerHTML = rams.map(r => `
+      <div class="glass-card rounded p-6 text-center cursor-pointer border border-[#1E1E1E] hover:border-[#FF1A1A] transition group"
+           onclick="selectRam('${r}')">
+        <div class="w-12 h-12 rounded bg-[#120505] border border-[#B00000]/40 mx-auto flex items-center justify-center text-xl text-[#FF1A1A] mb-3 group-hover:scale-110 transition-transform">
+          <i class="fa-solid fa-memory"></i>
+        </div>
+        <div class="font-heading font-black text-xl text-white group-hover:text-[#FF1A1A]">${r}</div>
+        <div class="text-[10px] text-gray-400 font-esports mt-1">SYSTEM RAM</div>
+      </div>
+    `).join('');
+
+  } catch(err) {
+    container.innerHTML = '<div class="col-span-full text-center py-6 text-red-400">Error loading RAM</div>';
+  }
+
+  goToStep(4);
+}
+
+// Step 4: Select RAM
+function selectRam(ramVal) {
+  wizardState.ram = ramVal;
+  updateSummaryBar();
+  document.getElementById('detected-processor-name').textContent = wizardState.processor;
+  goToStep(5);
+}
+
+// Step 5: Confirm Processor and Proceed
+function confirmProcessorAndProceed() {
+  goToStep(6);
+}
+
+// Step 6: Social Unlock
+function completeSocialStep(stepNum) {
+  wizardState.socialFollowed[stepNum] = true;
+  
+  // Show completed status
+  const linkEl = document.getElementById(`social-link-${stepNum}`);
+  const doneEl = document.getElementById(`social-done-${stepNum}`);
+  if (linkEl) linkEl.classList.add('hidden');
+  if (doneEl) doneEl.classList.remove('hidden');
+
+  showToast(`Action ${stepNum} confirmed!`, 'success');
+  checkUnlockReady();
+}
+
+function checkUnlockReady() {
+  const allDone = wizardState.socialFollowed[1] && wizardState.socialFollowed[2] && wizardState.socialFollowed[3];
+  const btn = document.getElementById('btn-unlock-sensitivity');
+  const lockIcon = document.getElementById('lock-icon-status');
+
+  if (allDone) {
+    btn.disabled = false;
+    btn.className = "w-full py-3.5 px-6 rounded font-heading font-black text-sm uppercase tracking-wider transition btn-esports-red shadow-[0_0_25px_rgba(255,26,26,0.6)] animate-pulse";
+    btn.innerHTML = '<i class="fa-solid fa-lock-open mr-2"></i> 🔓 UNLOCK ZERO RECOIL SENSITIVITY';
+    if (lockIcon) lockIcon.className = "fa-solid fa-lock-open text-green-500";
+  }
+}
+
+// Step 7: Unlock and Fetch Sensitivity Result
+async function unlockSensitivityResult() {
+  try {
+    const res = await fetch(`/api/sensitivity/lookup?gun_id=${wizardState.gunId}&device_id=${wizardState.deviceId}&ram=${encodeURIComponent(wizardState.ram)}&processor=${encodeURIComponent(wizardState.processor)}`);
+    const data = await res.json();
+
+    goToStep(7);
+
+    if (data.found && data.sensitivity) {
+      const s = data.sensitivity;
+      wizardState.sensitivityData = s;
+
+      // Populate Found View
+      document.getElementById('result-found-container').classList.remove('hidden');
+      document.getElementById('result-missing-container').classList.add('hidden');
+
+      // Summary headers
+      document.getElementById('res-gun-name').textContent = s.gun_name;
+      document.getElementById('res-device-name').textContent = `${s.brand_name} ${s.model_name}`;
+      document.getElementById('res-ram-val').textContent = s.ram;
+      document.getElementById('res-processor-val').textContent = s.processor;
+
+      // 6 metrics
+      document.getElementById('val-general').textContent = s.general;
+      document.getElementById('val-reddot').textContent = s.red_dot;
+      document.getElementById('val-2x').textContent = s.scope_2x;
+      document.getElementById('val-4x').textContent = s.scope_4x;
+      document.getElementById('val-sniper').textContent = s.sniper;
+      document.getElementById('val-freelook').textContent = s.free_look;
+
+      // Advanced HUD details
+      document.getElementById('extra-firebutton').textContent = `${s.fire_button_size}%`;
+      document.getElementById('extra-dpi').textContent = s.dpi || 'Standard';
+      document.getElementById('extra-aim').textContent = s.aim_precision || 'Default';
+      document.getElementById('extra-graphics').textContent = s.graphics || 'Ultra (High FPS)';
+      document.getElementById('extra-fps').textContent = s.fps || 'HIGH';
+      document.getElementById('extra-updated-by').textContent = s.updated_by || 'ARMUGA';
+      document.getElementById('extra-controls').textContent = s.control_settings || 'Drag smoothly from waist level towards enemy head.';
+
+      // Action Handlers
+      document.getElementById('btn-copy-settings').onclick = () => {
+        copySensitivityConfig(s.gun_name, `${s.brand_name} ${s.model_name}`, s.ram, s.general, s.red_dot, s.scope_2x, s.scope_4x, s.sniper, s.free_look, s.dpi, s.fire_button_size, s.aim_precision);
+      };
+
+      document.getElementById('btn-save-settings').onclick = function() {
+        saveSensitivity(s.id, this);
+      };
+
+      document.getElementById('btn-share-settings').onclick = () => {
+        shareSensitivity(`ZERO RECOIL Settings: ${s.gun_name} for ${s.model_name}`, `Check out tuned zero recoil settings for ${s.gun_name} on ${s.model_name}!`);
+      };
+
+    } else {
+      // Missing configuration
+      document.getElementById('result-found-container').classList.add('hidden');
+      document.getElementById('result-missing-container').classList.remove('hidden');
+
+      document.getElementById('missing-gun').textContent = wizardState.gunName;
+      document.getElementById('missing-device').textContent = `${wizardState.brandName} ${wizardState.deviceName}`;
+      document.getElementById('missing-ram').textContent = wizardState.ram;
+      document.getElementById('missing-cpu').textContent = wizardState.processor;
+
+      // Pre-fill modal
+      document.getElementById('req-brand').value = wizardState.brandName;
+      document.getElementById('req-model').value = wizardState.deviceName;
+      document.getElementById('req-ram').value = wizardState.ram;
+      document.getElementById('req-cpu').value = wizardState.processor;
+    }
+
+  } catch(err) {
+    showToast('Failed to retrieve sensitivity settings', 'danger');
+  }
+}
+
+// Reset Wizard
+function resetWizard() {
+  wizardState.gunId = null;
+  wizardState.gunName = null;
+  wizardState.brandId = null;
+  wizardState.brandName = null;
+  wizardState.deviceId = null;
+  wizardState.deviceName = null;
+  wizardState.ram = null;
+  wizardState.processor = null;
+  wizardState.socialFollowed = { 1: false, 2: false, 3: false };
+  wizardState.sensitivityData = null;
+
+  document.getElementById('wizard-summary-bar').classList.add('hidden');
+  document.getElementById('result-found-container').classList.add('hidden');
+  document.getElementById('result-missing-container').classList.add('hidden');
+
+  for (let i = 1; i <= 3; i++) {
+    const linkEl = document.getElementById(`social-link-${i}`);
+    const doneEl = document.getElementById(`social-done-${i}`);
+    if (linkEl) linkEl.classList.remove('hidden');
+    if (doneEl) doneEl.classList.add('hidden');
+  }
+
+  loadSocialLinks();
+  goToStep(1);
+}
+
+// Device Request Modal
+function openRequestDeviceModal() {
+  document.getElementById('req-brand').value = wizardState.brandName || '';
+  document.getElementById('req-model').value = wizardState.deviceName || '';
+  document.getElementById('req-ram').value = wizardState.ram || '';
+  document.getElementById('req-cpu').value = wizardState.processor || '';
+  document.getElementById('request-modal').classList.remove('hidden');
+}
+
+function closeRequestDeviceModal() {
+  document.getElementById('request-modal').classList.add('hidden');
+}
+
+async function submitDeviceRequest(e) {
+  e.preventDefault();
+  const form = e.target;
+  const payload = {
+    brand: form.brand.value,
+    model: form.model.value,
+    ram: form.ram.value,
+    processor: form.processor.value,
+    user_email: form.user_email.value,
+    notes: form.notes.value
+  };
+
+  try {
+    const res = await fetch('/api/request-device', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('Device request sent to ARMUGA & CATZX!');
+      closeRequestDeviceModal();
+    } else {
+      showToast(data.error || 'Failed to submit request', 'danger');
+    }
+  } catch(err) {
+    showToast('Network error submitting request', 'danger');
+  }
+}
+</script>
+{% endblock %}

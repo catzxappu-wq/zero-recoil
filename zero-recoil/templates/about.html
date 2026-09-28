@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}ABOUT ZERO RECOIL — ARMUGA X CATZX{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+  
+  <!-- Hero Section -->
+  <div class="text-center max-w-3xl mx-auto mb-16">
+    <div class="inline-flex items-center gap-2 bg-[#120505] border border-[#B00000]/60 px-4 py-1 rounded-full mb-3 shadow-[0_0_15px_rgba(255,26,26,0.2)]">
+      <i class="fa-solid fa-crosshairs text-[#FF1A1A] text-xs"></i>
+      <span class="text-xs font-esports font-bold tracking-widest text-gray-200">OUR ESPORTS PHILOSOPHY</span>
+    </div>
+    <h1 class="font-heading font-black text-4xl sm:text-6xl text-white tracking-wider mb-2">
+      ZERO <span class="text-[#FF1A1A] glow-text-red">RECOIL</span>
+    </h1>
+    <div class="font-heading text-xl sm:text-2xl text-gray-300 font-bold tracking-widest uppercase mb-4">
+      ARMUGA <span class="text-[#FF1A1A]">X</span> CATZX
+    </div>
+    <p class="font-esports font-bold text-lg sm:text-xl text-[#FF1A1A] tracking-wider uppercase mb-4">
+      MASTER YOUR AIM. CONTROL YOUR RECOIL.
+    </p>
+    <p class="text-sm text-gray-300 font-body leading-relaxed max-w-2xl mx-auto">
+      ZERO RECOIL was created out of frustration with fake, randomly generated sensitivity apps that mislead Free Fire players. We test every weapon, DPI multiplier, and screen refresh rate in competitive custom rooms to deliver real, high-performance sensitivity calibrations.
+    </p>
+  </div>
+
+  <!-- 3 Pillars of Calibration -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+    
+    <div class="glass-card rounded-lg p-6 border border-[#1E1E1E] hover:border-[#FF1A1A] transition text-center">
+      <div class="w-14 h-14 rounded-full bg-[#120505] border border-[#FF1A1A] flex items-center justify-center text-2xl text-[#FF1A1A] mx-auto mb-4">
+        <i class="fa-solid fa-microchip"></i>
+      </div>
+      <h3 class="font-heading font-bold text-lg text-white mb-2">HARDWARE BENCHMARKING</h3>
+      <p class="text-xs text-gray-400 font-body leading-relaxed">
+        We analyze your specific processor (Dimensity, Snapdragon, Bionic) and display refresh rate (90Hz, 120Hz, 144Hz) to eliminate touch sampling jitter.
+      </p>
+    </div>
+
+    <div class="glass-card rounded-lg p-6 border border-[#1E1E1E] hover:border-[#FF1A1A] transition text-center">
+      <div class="w-14 h-14 rounded-full bg-[#120505] border border-[#FF1A1A] flex items-center justify-center text-2xl text-[#FF1A1A] mx-auto mb-4">
+        <i class="fa-solid fa-crosshairs"></i>
+      </div>
+      <h3 class="font-heading font-bold text-lg text-white mb-2">BALLISTIC CONTROL</h3>
+      <p class="text-xs text-gray-400 font-body leading-relaxed">
+        Free Fire weapons have distinct recoil curves. MP40 requires instant snap drag, while AK47 demands burst recovery compensation.
+      </p>
+    </div>
+
+    <div class="glass-card rounded-lg p-6 border border-[#1E1E1E] hover:border-[#FF1A1A] transition text-center">
+      <div class="w-14 h-14 rounded-full bg-[#120505] border border-[#FF1A1A] flex items-center justify-center text-2xl text-[#FF1A1A] mx-auto mb-4">
+        <i class="fa-solid fa-sliders"></i>
+      </div>
+      <h3 class="font-heading font-bold text-lg text-white mb-2">TOTAL HUD INTEGRATION</h3>
+      <p class="text-xs text-gray-400 font-body leading-relaxed">
+        Sensitivity numbers alone aren't enough. We calibrate optimal Fire Button Size, DPI, Aim Precision, and graphic FPS thresholds for peak stability.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Creators Bio Box -->
+  <div class="p-8 rounded-lg bg-gradient-to-br from-[#120505] via-[#050505] to-[#120505] border border-[#B00000]/50 mb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div>
+        <div class="text-xs font-esports font-bold text-[#FF1A1A] tracking-wider uppercase mb-1">LEAD TESTER & TACTICIAN</div>
+        <h3 class="font-heading font-black text-2xl text-white mb-3">ARMUGA</h3>
+        <p class="text-xs sm:text-sm text-gray-300 font-body leading-relaxed">
+          Specializes in close-range SMG drag headshots and one-tap shotguns (M1887, M1014). Renowned for developing the J-Drag micro-movement calibration used across Indian and Southeast Asian competitive circles.
+        </p>
+      </div>
+
+      <div>
+        <div class="text-xs font-esports font-bold text-[#FF1A1A] tracking-wider uppercase mb-1">ANALYST & HARDWARE PROFILER</div>
+        <h3 class="font-heading font-black text-2xl text-white mb-3">CATZX</h3>
+        <p class="text-xs sm:text-sm text-gray-300 font-body leading-relaxed">
+          Focuses on AR spray control (SCAR, M4A1, XM8) and sniper quick-scope execution (AWM, Kar98k). Calibrates touch sampling rate multipliers and DPI settings for POCO, Xiaomi, and Samsung devices.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="text-center">
+    <h3 class="font-heading font-bold text-xl sm:text-2xl text-white mb-4">READY TO MASTER YOUR AIM?</h3>
+    <a href="{{ url_for('sensitivity_page') }}" class="btn-esports-red text-sm py-3 px-8 shadow-[0_0_20px_rgba(255,26,26,0.4)]">
+      <i class="fa-solid fa-crosshairs mr-1"></i> FIND MY ZERO RECOIL SENSITIVITY
+    </a>
+  </div>
+
+</div>
+{% endblock %}

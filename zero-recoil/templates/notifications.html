@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}NOTIFICATIONS — ZERO RECOIL | ARMUGA X CATZX{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+  
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <div class="inline-flex items-center gap-2 text-xs font-esports font-bold text-[#FF1A1A] tracking-wider uppercase mb-1">
+        <i class="fa-solid fa-bell"></i> SYSTEM ALERTS
+      </div>
+      <h1 class="font-heading font-black text-2xl sm:text-4xl text-white tracking-wider">
+        NOTIFICATIONS
+      </h1>
+      <p class="text-xs text-gray-400 font-esports tracking-wider mt-1">
+        UPDATES ON YOUR DEVICE REQUESTS & BENCHMARKS
+      </p>
+    </div>
+
+    <a href="{{ url_for('dashboard') }}" class="btn-esports-outline text-xs py-2 px-4">
+      ← BACK TO DASHBOARD
+    </a>
+  </div>
+
+  <div class="space-y-4">
+    {% if notifications %}
+      {% for n in notifications %}
+      <div class="glass-card rounded p-5 border border-[#1E1E1E] hover:border-[#FF1A1A] transition">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded bg-[#120505] border border-[#B00000]/40 flex items-center justify-center text-[#FF1A1A] flex-shrink-0 mt-0.5">
+              <i class="fa-solid fa-bell text-xs"></i>
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-sm text-white">{{ n.title }}</h3>
+              <p class="text-xs text-gray-300 font-body mt-1 leading-relaxed">{{ n.message }}</p>
+            </div>
+          </div>
+          <span class="text-[10px] text-gray-500 font-esports flex-shrink-0">{{ n.created_at }}</span>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="glass-card rounded-lg p-8 text-center border border-[#1E1E1E]">
+        <i class="fa-regular fa-bell-slash text-3xl text-gray-600 mb-2"></i>
+        <p class="text-xs text-gray-400 font-esports">You have no unread notifications.</p>
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

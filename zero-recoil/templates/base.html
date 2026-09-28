@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>{% block title %}ZERO RECOIL — ARMUGA X CATZX | Free Fire Sensitivity Platform{% endblock %}</title>
+  <meta name="description" content="Master your aim and control your recoil. Optimized Free Fire sensitivity settings by ARMUGA X CATZX for every gun, device brand, and RAM configuration.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              black: '#050505',
+              dark: '#0B0B0B',
+              card: '#120505',
+              darkred: '#5A0000',
+              crimson: '#B00000',
+              red: '#FF1A1A',
+              gray: '#A8A8A8',
+              border: '#1F1F1F'
+            }
+          },
+          fontFamily: {
+            heading: ['Orbitron', 'sans-serif'],
+            esports: ['Rajdhani', 'sans-serif'],
+            body: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Esports Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+
+  {% block head_extra %}{% endblock %}
+</head>
+<body class="bg-[#050505] text-white flex flex-col min-h-screen selection:bg-[#B00000] selection:text-white pb-16 md:pb-0">
+
+  <!-- LIVE STREAM BANNER (Shows when ARMUGA & CATZX are live) -->
+  {% if live_info and live_info.is_live %}
+  <div class="bg-gradient-to-r from-[#5A0000] via-[#B00000] to-[#5A0000] border-b border-[#FF1A1A] py-2 px-4 shadow-[0_4px_20px_rgba(255,26,26,0.3)]">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs md:text-sm">
+      <div class="flex items-center gap-2">
+        <span class="live-pulse-dot"></span>
+        <span class="font-heading font-black text-white tracking-wider">🔴 ARMUGA X CATZX IS LIVE</span>
+        <span class="hidden sm:inline text-red-100 font-esports tracking-wide">| {{ live_info.title }}</span>
+      </div>
+      <a href="{{ live_info.stream_url }}" target="_blank" rel="noopener noreferrer" 
+         class="inline-flex items-center gap-1.5 bg-black hover:bg-zinc-900 text-[#FF1A1A] hover:text-white px-3 py-1 rounded font-esports font-bold tracking-wider text-xs border border-[#FF1A1A] transition shadow-sm">
+        <i class="fa-brands fa-youtube text-red-500"></i> WATCH LIVE
+      </a>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="sticky top-0 z-40 bg-[#050505]/95 backdrop-blur-md border-b border-[#1E1E1E]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        
+        <!-- Logo & Brand Identity -->
+        <a href="{{ url_for('index') }}" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-sm bg-gradient-to-br from-[#FF1A1A] via-[#B00000] to-[#5A0000] p-0.5 shadow-[0_0_15px_rgba(255,26,26,0.4)]">
+            <div class="w-full h-full bg-[#050505] flex items-center justify-center">
+              <i class="fa-solid fa-crosshairs text-[#FF1A1A] group-hover:rotate-45 transition-transform duration-300 text-lg"></i>
+            </div>
+          </div>
+          <div>
+            <div class="font-heading font-black text-lg sm:text-xl tracking-widest text-white flex items-center gap-1">
+              ZERO <span class="text-[#FF1A1A] glow-text-red">RECOIL</span>
+            </div>
+            <div class="text-[10px] sm:text-xs font-esports font-bold text-gray-400 tracking-wider">
+              ARMUGA <span class="text-[#FF1A1A]">X</span> CATZX
+            </div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-6 font-esports text-sm font-semibold tracking-wider">
+          <a href="{{ url_for('index') }}" class="hover:text-[#FF1A1A] transition {% if request.path == '/' %}text-[#FF1A1A]{% else %}text-gray-300{% endif %}">
+            HOME
+          </a>
+          <a href="{{ url_for('sensitivity_page') }}" class="hover:text-[#FF1A1A] transition {% if request.path.startswith('/sensitivity') %}text-[#FF1A1A]{% else %}text-gray-300{% endif %}">
+            <i class="fa-solid fa-bolt text-[#FF1A1A] mr-1"></i> FIND SENSITIVITY
+          </a>
+          <a href="{{ url_for('guns_list') }}" class="hover:text-[#FF1A1A] transition {% if request.path.startswith('/guns') %}text-[#FF1A1A]{% else %}text-gray-300{% endif %}">
+            GUNS
+          </a>
+          <a href="{{ url_for('devices_list') }}" class="hover:text-[#FF1A1A] transition {% if request.path.startswith('/devices') %}text-[#FF1A1A]{% else %}text-gray-300{% endif %}">
+            DEVICES
+          </a>
+          <a href="{{ url_for('updates_list') }}" class="hover:text-[#FF1A1A] transition relative {% if request.path.startswith('/updates') %}text-[#FF1A1A]{% else %}text-gray-300{% endif %}">
+            UPDATES
+            <span class="inline-block bg-[#FF1A1A] text-white text-[9px] font-black px-1.5 py-0.2 rounded clip-badge ml-1">NEW</span>
+          </a>
+          <a href="{{ url_for('about_page') }}" class="hover:text-[#FF1A1A] transition {% if request.path == '/about' %}text-[#FF1A1A]{% else %}text-gray-300{% endif %}">
+            ABOUT
+          </a>
+        </nav>
+
+        <!-- Right Side: Global Search & Auth -->
+        <div class="flex items-center gap-3 sm:gap-4">
+          
+          <!-- Global Search Container -->
+          <div class="relative">
+            <div class="flex items-center bg-[#0B0B0B] border border-[#1E1E1E] focus-within:border-[#FF1A1A] rounded px-2.5 py-1.5 transition">
+              <i class="fa-solid fa-magnifying-glass text-gray-400 text-xs mr-2"></i>
+              <input type="text" id="global-search-input" placeholder="Search gun or device..." 
+                     autocomplete="off"
+                     class="bg-transparent text-xs text-white placeholder-gray-500 focus:outline-none w-28 sm:w-44 font-body">
+            </div>
+            <!-- Live Autocomplete dropdown -->
+            <div id="global-search-results" 
+                 class="hidden absolute right-0 mt-2 w-72 sm:w-80 bg-[#0B0B0B] border border-[#FF1A1A]/40 rounded shadow-[0_10px_30px_rgba(0,0,0,0.8)] z-50 overflow-hidden">
+            </div>
+          </div>
+
+          <!-- Customer Auth States -->
+          {% if current_user %}
+            <div class="relative group">
+              <a href="{{ url_for('dashboard') }}" class="flex items-center gap-2 bg-[#120505] border border-[#B00000]/40 hover:border-[#FF1A1A] px-3 py-1.5 rounded transition">
+                <div class="w-6 h-6 rounded-full bg-[#B00000] flex items-center justify-center text-xs font-bold text-white">
+                  {{ current_user.name[0]|upper }}
+                </div>
+                <span class="hidden sm:inline text-xs font-esports font-bold tracking-wider text-gray-200">
+                  {{ current_user.name }}
+                </span>
+                <i class="fa-solid fa-angle-down text-gray-400 text-[10px]"></i>
+              </a>
+              <!-- User Dropdown Menu -->
+              <div class="hidden group-hover:block absolute right-0 mt-1 w-44 bg-[#0B0B0B] border border-[#1E1E1E] rounded shadow-xl py-1 text-xs font-esports tracking-wider z-50">
+                <a href="{{ url_for('dashboard') }}" class="block px-4 py-2 hover:bg-[#1a0505] hover:text-[#FF1A1A]">
+                  <i class="fa-solid fa-gauge mr-2 text-red-500"></i> DASHBOARD
+                </a>
+                <a href="{{ url_for('saved_sensitivities') }}" class="block px-4 py-2 hover:bg-[#1a0505] hover:text-[#FF1A1A]">
+                  <i class="fa-solid fa-bookmark mr-2 text-red-500"></i> SAVED SENS
+                </a>
+                <a href="{{ url_for('profile_page') }}" class="block px-4 py-2 hover:bg-[#1a0505] hover:text-[#FF1A1A]">
+                  <i class="fa-solid fa-user-gear mr-2 text-red-500"></i> PROFILE
+                </a>
+                <a href="{{ url_for('notifications_page') }}" class="block px-4 py-2 hover:bg-[#1a0505] hover:text-[#FF1A1A]">
+                  <i class="fa-solid fa-bell mr-2 text-red-500"></i> NOTIFICATIONS
+                </a>
+                <div class="border-t border-[#1E1E1E] my-1"></div>
+                <a href="{{ url_for('logout') }}" class="block px-4 py-2 text-red-400 hover:bg-[#1a0505]">
+                  <i class="fa-solid fa-right-from-bracket mr-2"></i> LOGOUT
+                </a>
+              </div>
+            </div>
+          {% else %}
+            <div class="flex items-center gap-2">
+              <a href="{{ url_for('login') }}" class="text-xs font-esports font-bold tracking-wider text-gray-300 hover:text-white px-2 py-1.5 transition">
+                LOGIN
+              </a>
+              <a href="{{ url_for('register') }}" class="hidden sm:inline-flex btn-esports-red text-xs py-1.5 px-3">
+                REGISTER
+              </a>
+            </div>
+          {% endif %}
+
+          <!-- Admin Portal Link -->
+          {% if current_admin %}
+            <a href="{{ url_for('admin_dashboard') }}" title="Admin Panel: Logged in as {{ current_admin.name }}"
+               class="bg-[#FF1A1A] hover:bg-[#B00000] text-black px-2.5 py-1 rounded text-xs font-esports font-black tracking-wider flex items-center gap-1 shadow-[0_0_10px_rgba(255,26,26,0.5)]">
+              <i class="fa-solid fa-shield-halved"></i>
+              <span class="hidden lg:inline">{{ current_admin.name }}</span>
+            </a>
+          {% else %}
+            <a href="{{ url_for('admin_login') }}" title="Admin Access" class="text-stone-600 hover:text-red-500 p-1.5 text-xs transition">
+              <i class="fa-solid fa-lock"></i>
+            </a>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FLASH MESSAGES -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="space-y-2">
+          {% for category, message in messages %}
+            <div class="flex items-center justify-between px-4 py-3 rounded border text-sm font-medium {% if category == 'danger' or category == 'error' %}bg-[#1a0505] border-[#B00000] text-red-300{% elif category == 'warning' %}bg-[#1e1305] border-yellow-700 text-yellow-300{% else %}bg-[#0B0B0B] border-[#FF1A1A] text-white shadow-[0_0_10px_rgba(255,26,26,0.2)]{% endif %}">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid {% if category == 'danger' or category == 'error' %}fa-triangle-exclamation text-red-500{% elif category == 'warning' %}fa-circle-exclamation text-yellow-500{% else %}fa-circle-check text-[#FF1A1A]{% endif %}"></i>
+                <span>{{ message }}</span>
+              </div>
+              <button onclick="this.parentElement.remove()" class="text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- MAIN BODY CONTENT -->
+  <main class="flex-grow">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#0B0B0B] border-t border-[#1E1E1E] pt-12 pb-8 mt-20 text-gray-400 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+        
+        <!-- Brand Info -->
+        <div class="md:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-sm bg-gradient-to-br from-[#FF1A1A] to-[#5A0000] p-0.5">
+              <div class="w-full h-full bg-[#050505] flex items-center justify-center">
+                <i class="fa-solid fa-crosshairs text-[#FF1A1A] text-sm"></i>
+              </div>
+            </div>
+            <div>
+              <span class="font-heading font-black text-lg tracking-wider text-white">ZERO <span class="text-[#FF1A1A]">RECOIL</span></span>
+              <div class="text-[10px] font-esports font-bold text-gray-400">ARMUGA X CATZX</div>
+            </div>
+          </div>
+          <p class="text-gray-400 text-xs font-body max-w-md leading-relaxed">
+            The ultimate Free Fire sensitivity finder and tuning platform. Powered by competitive esports research by <strong class="text-white">ARMUGA</strong> and <strong class="text-white">CATZX</strong>. Calibrated specifically for your gun, device model, RAM, and processor.
+          </p>
+          <div class="text-[11px] font-esports tracking-widest text-[#FF1A1A]">
+            MASTER YOUR AIM. CONTROL YOUR RECOIL.
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="font-esports font-bold text-white tracking-widest text-sm mb-3">PLATFORM</h4>
+          <ul class="space-y-2 font-esports">
+            <li><a href="{{ url_for('sensitivity_page') }}" class="hover:text-[#FF1A1A] transition">FIND SENSITIVITY</a></li>
+            <li><a href="{{ url_for('guns_list') }}" class="hover:text-[#FF1A1A] transition">GUN DATABASE</a></li>
+            <li><a href="{{ url_for('devices_list') }}" class="hover:text-[#FF1A1A] transition">DEVICE DATABASE</a></li>
+            <li><a href="{{ url_for('updates_list') }}" class="hover:text-[#FF1A1A] transition">LATEST UPDATES</a></li>
+            <li><a href="{{ url_for('about_page') }}" class="hover:text-[#FF1A1A] transition">ABOUT ARMUGA & CATZX</a></li>
+          </ul>
+        </div>
+
+        <!-- Creators & Socials -->
+        <div>
+          <h4 class="font-esports font-bold text-white tracking-widest text-sm mb-3">OFFICIAL SOCIALS</h4>
+          <p class="text-gray-400 text-xs mb-3">Follow ARMUGA and CATZX for daily headshot clips and new sensitivities:</p>
+          <div class="flex items-center gap-3">
+            <a href="https://instagram.com" target="_blank" class="w-9 h-9 rounded bg-[#150505] border border-[#B00000]/40 hover:border-[#FF1A1A] flex items-center justify-center text-gray-300 hover:text-[#FF1A1A] transition">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://youtube.com" target="_blank" class="w-9 h-9 rounded bg-[#150505] border border-[#B00000]/40 hover:border-[#FF1A1A] flex items-center justify-center text-gray-300 hover:text-[#FF1A1A] transition">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+            <a href="https://discord.com" target="_blank" class="w-9 h-9 rounded bg-[#150505] border border-[#B00000]/40 hover:border-[#FF1A1A] flex items-center justify-center text-gray-300 hover:text-[#FF1A1A] transition">
+              <i class="fa-brands fa-discord"></i>
+            </a>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#1E1E1E]">
+            <a href="{{ url_for('contact_page') }}" class="text-xs font-esports text-gray-400 hover:text-white transition">
+              <i class="fa-solid fa-envelope mr-1 text-[#FF1A1A]"></i> CONTACT & SUPPORT
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Legal / Disclaimer -->
+      <div class="border-t border-[#1E1E1E] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-500">
+        <div>
+          © 2026 ZERO RECOIL — ARMUGA X CATZX. All rights reserved.
+        </div>
+        <div class="text-center sm:text-right max-w-xl">
+          Free Fire is a registered trademark of Garena International. ZERO RECOIL is an independent esports sensitivity analysis platform created by ARMUGA and CATZX.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MOBILE BOTTOM NAVIGATION (Crucial for mobile Free Fire players) -->
+  <div class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#050505]/95 backdrop-blur-md border-t border-[#1E1E1E] px-2 py-1">
+    <div class="grid grid-cols-5 items-center text-center font-esports text-[10px] tracking-wider">
+      <a href="{{ url_for('index') }}" class="py-1.5 flex flex-col items-center {% if request.path == '/' %}text-[#FF1A1A]{% else %}text-gray-400{% endif %}">
+        <i class="fa-solid fa-house text-base"></i>
+        <span>HOME</span>
+      </a>
+      <a href="{{ url_for('guns_list') }}" class="py-1.5 flex flex-col items-center {% if request.path.startswith('/guns') %}text-[#FF1A1A]{% else %}text-gray-400{% endif %}">
+        <i class="fa-solid fa-crosshairs text-base"></i>
+        <span>GUNS</span>
+      </a>
+      <!-- Center highlighted button: SENSITIVITY -->
+      <a href="{{ url_for('sensitivity_page') }}" class="-mt-4 flex flex-col items-center group">
+        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-[#B00000] to-[#FF1A1A] p-0.5 shadow-[0_0_15px_rgba(255,26,26,0.6)] flex items-center justify-center text-white">
+          <i class="fa-solid fa-bolt text-lg"></i>
+        </div>
+        <span class="text-[#FF1A1A] font-bold mt-0.5">SENS</span>
+      </a>
+      <a href="{{ url_for('devices_list') }}" class="py-1.5 flex flex-col items-center {% if request.path.startswith('/devices') %}text-[#FF1A1A]{% else %}text-gray-400{% endif %}">
+        <i class="fa-solid fa-mobile-screen text-base"></i>
+        <span>DEVICES</span>
+      </a>
+      <a href="{% if current_user %}{{ url_for('dashboard') }}{% else %}{{ url_for('login') }}{% endif %}" class="py-1.5 flex flex-col items-center {% if request.path.startswith('/dashboard') or request.path.startswith('/login') %}text-[#FF1A1A]{% else %}text-gray-400{% endif %}">
+        <i class="fa-solid fa-user text-base"></i>
+        <span>{% if current_user %}ACCOUNT{% else %}LOGIN{% endif %}</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-20 md:bottom-6 right-4 z-50 flex flex-col gap-2 max-w-sm pointer-events-none"></div>
+
+  <!-- Main JavaScript -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

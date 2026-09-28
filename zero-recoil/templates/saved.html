@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}SAVED SENSITIVITIES — ZERO RECOIL | ARMUGA X CATZX{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+  
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+    <div>
+      <div class="inline-flex items-center gap-2 text-xs font-esports font-bold text-[#FF1A1A] tracking-wider uppercase mb-1">
+        <i class="fa-solid fa-bookmark"></i> YOUR ARSENAL
+      </div>
+      <h1 class="font-heading font-black text-2xl sm:text-4xl text-white tracking-wider">
+        SAVED <span class="text-[#FF1A1A]">SENSITIVITIES</span>
+      </h1>
+      <p class="text-xs text-gray-400 font-esports tracking-wider mt-1">
+        CLICK COPY TO CLIPBOARD BEFORE ENTERING FREE FIRE MATCHES
+      </p>
+    </div>
+
+    <a href="{{ url_for('sensitivity_page') }}" class="btn-esports-red text-xs py-2.5 px-5">
+      <i class="fa-solid fa-crosshairs"></i> CALIBRATE ANOTHER GUN
+    </a>
+  </div>
+
+  {% if saved_list %}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {% for s in saved_list %}
+      <div class="glass-card rounded-lg p-6 border border-[#1E1E1E] hover:border-[#FF1A1A] transition flex flex-col justify-between">
+        
+        <div>
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <span class="text-[10px] font-esports font-bold text-[#FF1A1A] tracking-wider uppercase">
+                {{ s.category_name }} • {{ s.brand_name }}
+              </span>
+              <h3 class="font-heading font-black text-xl text-white mt-0.5">
+                {{ s.gun_name }}
+              </h3>
+              <p class="text-xs text-gray-400 font-body">
+                {{ s.model_name }} ({{ s.ram }}) • {{ s.processor }}
+              </p>
+            </div>
+            
+            <form action="{{ url_for('remove_saved_sensitivity', id=s.id) }}" method="POST" onsubmit="return confirm('Remove this sensitivity?');">
+              <button type="submit" class="p-2 rounded bg-[#120505] hover:bg-red-900 border border-[#1E1E1E] text-gray-400 hover:text-white transition text-xs" title="Remove">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- 6 metrics -->
+          <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center text-xs font-esports bg-[#050505] p-3 rounded border border-[#1E1E1E] mb-4">
+            <div>
+              <span class="text-gray-500 block text-[9px]">GEN</span>
+              <span class="font-heading font-black text-[#FF1A1A] text-lg">{{ s.general }}</span>
+            </div>
+            <div>
+              <span class="text-gray-500 block text-[9px]">RED</span>
+              <span class="font-heading font-black text-[#FF1A1A] text-lg">{{ s.red_dot }}</span>
+            </div>
+            <div>
+              <span class="text-gray-500 block text-[9px]">2X</span>
+              <span class="font-heading font-black text-white text-lg">{{ s.scope_2x }}</span>
+            </div>
+            <div>
+              <span class="text-gray-500 block text-[9px]">4X</span>
+              <span class="font-heading font-black text-white text-lg">{{ s.scope_4x }}</span>
+            </div>
+            <div>
+              <span class="text-gray-500 block text-[9px]">SNP</span>
+              <span class="font-heading font-black text-white text-lg">{{ s.sniper }}</span>
+            </div>
+            <div>
+              <span class="text-gray-500 block text-[9px]">FREE</span>
+              <span class="font-heading font-black text-white text-lg">{{ s.free_look }}</span>
+            </div>
+          </div>
+
+          <!-- Extra control specs -->
+          <div class="grid grid-cols-3 gap-2 text-xs font-esports text-gray-400 mb-4">
+            <div class="bg-[#0B0B0B] p-2 rounded text-center border border-[#1E1E1E]">
+              <span class="text-gray-500 block text-[9px]">FIRE BTN</span>
+              <strong class="text-[#FF1A1A]">{{ s.fire_button_size }}%</strong>
+            </div>
+            <div class="bg-[#0B0B0B] p-2 rounded text-center border border-[#1E1E1E]">
+              <span class="text-gray-500 block text-[9px]">DPI</span>
+              <strong class="text-white">{{ s.dpi }}</strong>
+            </div>
+            <div class="bg-[#0B0B0B] p-2 rounded text-center border border-[#1E1E1E]">
+              <span class="text-gray-500 block text-[9px]">AIM</span>
+              <strong class="text-white">{{ s.aim_precision }}</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-[#1E1E1E] flex items-center justify-between gap-3">
+          <span class="text-[10px] text-gray-500 font-esports">Saved {{ s.created_at[:10] }}</span>
+          <button onclick="copySensitivityConfig('{{ s.gun_name }}', '{{ s.brand_name }} {{ s.model_name }}', '{{ s.ram }}', {{ s.general }}, {{ s.red_dot }}, {{ s.scope_2x }}, {{ s.scope_4x }}, {{ s.sniper }}, {{ s.free_look }}, '{{ s.dpi }}', {{ s.fire_button_size }}, '{{ s.aim_precision }}')"
+                  class="btn-esports-red text-xs py-1.5 px-4">
+            <i class="fa-solid fa-copy"></i> COPY SETTINGS
+          </button>
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="glass-card rounded-lg p-12 text-center border border-[#1E1E1E] max-w-lg mx-auto">
+      <div class="w-16 h-16 rounded-full bg-[#120505] border border-[#FF1A1A] mx-auto flex items-center justify-center text-2xl text-[#FF1A1A] mb-4">
+        <i class="fa-regular fa-bookmark"></i>
+      </div>
+      <h3 class="font-heading font-bold text-lg text-white mb-2">NO SAVED SENSITIVITIES YET</h3>
+      <p class="text-xs text-gray-400 font-body mb-6">
+        When using our sensitivity finder, click the "SAVE" button to bookmark your configurations here for quick 1-click copying.
+      </p>
+      <a href="{{ url_for('sensitivity_page') }}" class="btn-esports-red text-xs py-2.5 px-6">
+        LAUNCH SENSITIVITY FINDER
+      </a>
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}

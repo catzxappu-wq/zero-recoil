@@ -1,0 +1,89 @@
+{% extends "admin/base.html" %}
+
+{% block title %}LIVE STREAM CONTROL — ZERO RECOIL ADMIN{% endblock %}
+{% block admin_title %}LIVE STREAM BROADCAST SYSTEM{% endblock %}
+
+{% block admin_content %}
+<div class="max-w-3xl mx-auto space-y-8">
+  
+  <div>
+    <h1 class="font-heading font-black text-2xl text-white">LIVE STREAM CONTROLLER</h1>
+    <p class="text-xs text-gray-400 font-esports">MANAGE HOMEPAGE LIVE BROADCAST BANNER FOR ARMUGA & CATZX STREAMS</p>
+  </div>
+
+  <div class="glass-card rounded-lg p-6 sm:p-8 border border-[#B00000]/50 shadow-2xl">
+    
+    <div class="flex items-center justify-between border-b border-[#1E1E1E] pb-6 mb-6">
+      <div>
+        <div class="text-xs font-esports text-gray-400 font-bold mb-1">CURRENT BROADCAST STATUS</div>
+        <div class="flex items-center gap-2">
+          {% if live.is_live %}
+            <span class="live-pulse-dot"></span>
+            <span class="font-heading font-black text-xl text-[#FF1A1A]">🔴 LIVE NOW</span>
+          {% else %}
+            <span class="w-3 h-3 rounded-full bg-gray-600"></span>
+            <span class="font-heading font-black text-xl text-gray-400">OFFLINE</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="text-xs font-esports text-gray-500">
+        Last updated by <strong class="text-white">{{ live.updated_by }}</strong>
+      </div>
+    </div>
+
+    <form action="{{ url_for('admin_update_live') }}" method="POST" class="space-y-6 text-xs font-esports">
+      
+      <div>
+        <label class="block text-gray-300 font-bold mb-2">BROADCAST STATE</label>
+        <div class="grid grid-cols-2 gap-4">
+          <label class="flex items-center gap-3 p-4 rounded bg-[#050505] border border-[#1E1E1E] cursor-pointer hover:border-[#FF1A1A] transition">
+            <input type="radio" name="is_live" value="1" {% if live.is_live %}checked{% endif %} class="accent-[#FF1A1A]">
+            <div>
+              <span class="font-heading font-bold text-white block">🔴 LIVE NOW</span>
+              <span class="text-[10px] text-gray-400">Show top red banner on homepage</span>
+            </div>
+          </label>
+
+          <label class="flex items-center gap-3 p-4 rounded bg-[#050505] border border-[#1E1E1E] cursor-pointer hover:border-[#FF1A1A] transition">
+            <input type="radio" name="is_live" value="0" {% if not live.is_live %}checked{% endif %} class="accent-[#FF1A1A]">
+            <div>
+              <span class="font-heading font-bold text-gray-300 block">OFFLINE</span>
+              <span class="text-[10px] text-gray-400">Hide live banner</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-300 font-bold mb-1">STREAM BANNER TITLE</label>
+        <input type="text" name="title" value="{{ live.title }}" required 
+               placeholder="🔴 ARMUGA X CATZX IS LIVE - TESTING FF HEADSHOT SENSITIVITIES"
+               class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-3 text-white font-body">
+      </div>
+
+      <div>
+        <label class="block text-gray-300 font-bold mb-1">YOUTUBE LIVE STREAM URL</label>
+        <div class="relative">
+          <i class="fa-brands fa-youtube absolute left-3 top-1/2 -translate-y-1/2 text-red-500 text-sm"></i>
+          <input type="url" name="stream_url" value="{{ live.stream_url }}" required 
+                 placeholder="https://youtube.com/@armugaxcatzx/live"
+                 class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded py-3 pl-9 pr-3 text-white font-mono text-xs">
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-[#1E1E1E] flex items-center justify-between">
+        <a href="{{ url_for('index') }}" target="_blank" class="text-xs text-gray-400 hover:text-white">
+          <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Preview Homepage Banner
+        </a>
+        <button type="submit" class="btn-esports-red text-sm py-2.5 px-6 shadow-[0_0_20px_rgba(255,26,26,0.5)]">
+          UPDATE LIVE BROADCAST STATE
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+{% endblock %}

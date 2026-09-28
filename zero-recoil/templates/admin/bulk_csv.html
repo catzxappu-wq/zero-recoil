@@ -1,0 +1,91 @@
+{% extends "admin/base.html" %}
+
+{% block title %}BULK SENSITIVITY CSV — ZERO RECOIL ADMIN{% endblock %}
+{% block admin_title %}BULK CSV IMPORT & EXPORT{% endblock %}
+
+{% block admin_content %}
+<div class="max-w-4xl mx-auto space-y-8">
+  
+  <div>
+    <h1 class="font-heading font-black text-2xl text-white">BULK CSV TOOLS</h1>
+    <p class="text-xs text-gray-400 font-esports">IMPORT OR EXPORT HUNDREDS OF SENSITIVITY RECORDS INSTANTLY</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    
+    <!-- EXPORT CSV CARD -->
+    <div class="glass-card rounded-lg p-6 border border-[#1E1E1E] hover:border-[#FF1A1A] transition flex flex-col justify-between">
+      <div>
+        <div class="w-12 h-12 rounded bg-[#120505] border border-[#B00000]/40 flex items-center justify-center text-xl text-[#FF1A1A] mb-4">
+          <i class="fa-solid fa-file-arrow-down"></i>
+        </div>
+        <h3 class="font-heading font-bold text-lg text-white mb-2">EXPORT DATABASE TO CSV</h3>
+        <p class="text-xs text-gray-400 font-body mb-6 leading-relaxed">
+          Download a complete CSV backup containing all active and inactive sensitivity records currently stored in the ZERO RECOIL database.
+        </p>
+      </div>
+
+      <div>
+        <a href="{{ url_for('admin_export_csv') }}" class="btn-esports-red text-xs py-3 px-6 w-full justify-center">
+          <i class="fa-solid fa-download"></i> EXPORT CSV NOW
+        </a>
+      </div>
+    </div>
+
+    <!-- SAMPLE CSV TEMPLATE CARD -->
+    <div class="glass-card rounded-lg p-6 border border-[#1E1E1E] hover:border-[#FF1A1A] transition flex flex-col justify-between">
+      <div>
+        <div class="w-12 h-12 rounded bg-[#120505] border border-[#B00000]/40 flex items-center justify-center text-xl text-yellow-500 mb-4">
+          <i class="fa-solid fa-file-lines"></i>
+        </div>
+        <h3 class="font-heading font-bold text-lg text-white mb-2">SAMPLE CSV TEMPLATE</h3>
+        <p class="text-xs text-gray-400 font-body mb-6 leading-relaxed">
+          Download the formatted CSV template with required column headers (<code class="text-red-400">Brand, Model, RAM, Processor, Gun...</code>) for bulk upload.
+        </p>
+      </div>
+
+      <div>
+        <a href="{{ url_for('admin_sample_csv') }}" class="btn-esports-outline text-xs py-3 px-6 w-full justify-center">
+          <i class="fa-solid fa-file-arrow-down"></i> DOWNLOAD SAMPLE TEMPLATE
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- IMPORT CSV FORM -->
+  <div class="glass-card rounded-lg p-8 border border-[#B00000]/40 shadow-xl">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 rounded bg-[#120505] border border-[#FF1A1A] flex items-center justify-center text-lg text-[#FF1A1A]">
+        <i class="fa-solid fa-file-arrow-up"></i>
+      </div>
+      <div>
+        <h2 class="font-heading font-bold text-lg text-white">IMPORT CSV RECORDS</h2>
+        <p class="text-xs text-gray-400 font-esports">UPLOAD HUNDREDS OF SENSITIVITY BENCHMARKS AT ONCE</p>
+      </div>
+    </div>
+
+    <form action="{{ url_for('admin_import_csv') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+      <div class="border-2 border-dashed border-[#1E1E1E] hover:border-[#FF1A1A] rounded-lg p-8 text-center transition bg-[#050505]">
+        <i class="fa-solid fa-cloud-arrow-up text-4xl text-gray-500 mb-3"></i>
+        <div class="text-xs font-esports font-bold text-white mb-1">SELECT A CSV FILE FROM YOUR COMPUTER</div>
+        <div class="text-[10px] text-gray-500 mb-4">Must match the standard ZERO RECOIL column format</div>
+        <input type="file" name="csv_file" accept=".csv" required 
+               class="text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:font-esports file:font-bold file:bg-[#B00000] file:text-white hover:file:bg-[#FF1A1A] cursor-pointer">
+      </div>
+
+      <div class="p-4 rounded bg-[#080808] border border-[#1E1E1E] text-xs font-body text-gray-400">
+        <strong class="text-white block font-esports mb-1">CSV COLUMN STRUCTURE:</strong>
+        <code class="text-[#FF1A1A] block font-mono text-[11px] overflow-x-auto">
+          Brand | Model | RAM | Processor | Gun | General | Red Dot | 2X | 4X | Sniper | Free Look
+        </code>
+      </div>
+
+      <button type="submit" class="btn-esports-red py-3 text-sm w-full font-bold shadow-[0_0_20px_rgba(255,26,26,0.4)]">
+        <i class="fa-solid fa-upload mr-2"></i> UPLOAD AND PROCESS CSV
+      </button>
+    </form>
+  </div>
+
+</div>
+{% endblock %}

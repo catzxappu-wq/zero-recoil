@@ -1,0 +1,416 @@
+{% extends "base.html" %}
+
+{% block title %}ZERO RECOIL — ARMUGA X CATZX | Free Fire Sensitivity Finder{% endblock %}
+
+{% block content %}
+<div class="relative overflow-hidden">
+  
+  <!-- Subtle Red Glow Backdrops -->
+  <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-[#FF1A1A]/10 rounded-full blur-[120px] pointer-events-none"></div>
+  <div class="absolute top-60 left-1/4 w-[300px] h-[250px] bg-[#B00000]/15 rounded-full blur-[90px] pointer-events-none"></div>
+
+  <!-- HERO SECTION -->
+  <section class="relative pt-12 sm:pt-20 pb-16 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto">
+    
+    <!-- Creator Brand Pill -->
+    <div class="inline-flex items-center gap-2 bg-[#120505] border border-[#B00000]/60 px-4 py-1.5 rounded-full mb-6 shadow-[0_0_15px_rgba(255,26,26,0.25)]">
+      <span class="w-2 h-2 rounded-full bg-[#FF1A1A] animate-ping"></span>
+      <span class="font-esports font-bold tracking-widest text-xs sm:text-sm text-gray-200 uppercase">
+        OFFICIAL PLATFORM BY <span class="text-[#FF1A1A] font-extrabold">ARMUGA X CATZX</span>
+      </span>
+    </div>
+
+    <!-- Main Heading with Subtle Red Gaming Glow -->
+    <h1 class="font-heading font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-wider text-white mb-2 leading-none relative">
+      <span class="relative z-10">ZERO <span class="text-[#FF1A1A] glow-text-red">RECOIL</span></span>
+      <!-- Background Ambient Glow Text for Depth -->
+      <span class="absolute inset-0 text-[#FF1A1A] blur-2xl opacity-40 select-none -z-0">ZERO RECOIL</span>
+    </h1>
+
+    <!-- Creator Subtitle -->
+    <div class="font-heading text-lg sm:text-2xl md:text-3xl text-gray-300 font-bold tracking-widest uppercase mb-4">
+      ARMUGA <span class="text-[#FF1A1A]">X</span> CATZX
+    </div>
+
+    <!-- Main Tagline -->
+    <p class="font-esports font-bold text-xl sm:text-2xl md:text-3xl text-[#FF1A1A] tracking-wider uppercase mb-2">
+      MASTER YOUR AIM. CONTROL YOUR RECOIL.
+    </p>
+
+    <!-- Secondary Tagline -->
+    <p class="font-esports text-sm sm:text-base text-gray-400 font-semibold tracking-widest uppercase mb-4">
+      FIND YOUR PERFECT FREE FIRE SENSITIVITY
+    </p>
+
+    <!-- Description -->
+    <p class="text-sm sm:text-base text-gray-300 max-w-2xl mx-auto mb-8 font-body leading-relaxed">
+      Find optimized Free Fire sensitivity settings for your exact gun, device and specifications. Calibrated for instant one-taps and laser drag headshots.
+    </p>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+      <a href="{{ url_for('sensitivity_page') }}" class="w-full sm:w-auto btn-esports-red text-base py-3 px-8 shadow-[0_0_25px_rgba(255,26,26,0.5)]">
+        <i class="fa-solid fa-crosshairs"></i> FIND MY SENSITIVITY
+      </a>
+      <a href="{{ url_for('updates_list') }}" class="w-full sm:w-auto btn-esports-outline text-base py-3 px-8">
+        <i class="fa-solid fa-bolt text-[#FF1A1A]"></i> LATEST UPDATES
+      </a>
+    </div>
+
+    <!-- Quick Stats Bar -->
+    <div class="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded bg-[#0B0B0B]/80 border border-[#1E1E1E] max-w-3xl mx-auto">
+      <div class="text-center">
+        <div class="font-heading font-black text-2xl text-white">{{ stats.guns }}</div>
+        <div class="font-esports text-xs text-gray-400 tracking-wider">COMPETITIVE GUNS</div>
+      </div>
+      <div class="text-center border-l border-[#1E1E1E]">
+        <div class="font-heading font-black text-2xl text-white">{{ stats.brands }}</div>
+        <div class="font-esports text-xs text-gray-400 tracking-wider">DEVICE BRANDS</div>
+      </div>
+      <div class="text-center border-l border-[#1E1E1E]">
+        <div class="font-heading font-black text-2xl text-white">{{ stats.devices }}</div>
+        <div class="font-esports text-xs text-gray-400 tracking-wider">TUNED MODELS</div>
+      </div>
+      <div class="text-center border-l border-[#1E1E1E]">
+        <div class="font-heading font-black text-2xl text-[#FF1A1A]">{{ stats.sensitivities }}+</div>
+        <div class="font-esports text-xs text-gray-400 tracking-wider">RECOIL PROFILES</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION (4 PREMIUM CARDS) -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white tracking-wider">
+        ENGINEERED FOR <span class="text-[#FF1A1A]">HEADSHOT ACCURACY</span>
+      </h2>
+      <p class="text-xs sm:text-sm text-gray-400 font-esports tracking-wider mt-1">
+        NO RANDOM NUMBERS. 100% REAL ESPORTS TUNING BY ARMUGA X CATZX.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- Card 1: Gun Based -->
+      <div class="glass-card rounded p-6 relative group overflow-hidden border border-[#1E1E1E] hover:border-[#FF1A1A] transition-all">
+        <div class="w-12 h-12 rounded bg-[#1A0505] border border-[#B00000] flex items-center justify-center text-xl text-[#FF1A1A] mb-4 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,26,26,0.3)]">
+          <i class="fa-solid fa-crosshairs"></i>
+        </div>
+        <h3 class="font-heading font-bold text-lg text-white mb-2 tracking-wide flex items-center gap-2">
+          🎯 GUN BASED
+        </h3>
+        <p class="text-xs sm:text-sm text-gray-400 font-body leading-relaxed">
+          Find sensitivity for individual guns. From MP40 and M1887 to SCAR, AK47, and AWM.
+        </p>
+        <div class="mt-4 pt-3 border-t border-[#1E1E1E] flex items-center justify-between text-xs font-esports text-[#FF1A1A]">
+          <span>SELECT WEAPON</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+      </div>
+
+      <!-- Card 2: Device Based -->
+      <div class="glass-card rounded p-6 relative group overflow-hidden border border-[#1E1E1E] hover:border-[#FF1A1A] transition-all">
+        <div class="w-12 h-12 rounded bg-[#1A0505] border border-[#B00000] flex items-center justify-center text-xl text-[#FF1A1A] mb-4 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,26,26,0.3)]">
+          <i class="fa-solid fa-mobile-screen"></i>
+        </div>
+        <h3 class="font-heading font-bold text-lg text-white mb-2 tracking-wide flex items-center gap-2">
+          📱 DEVICE BASED
+        </h3>
+        <p class="text-xs sm:text-sm text-gray-400 font-body leading-relaxed">
+          Get settings based on your exact device model, display touch sampling rate, and screen DPI.
+        </p>
+        <div class="mt-4 pt-3 border-t border-[#1E1E1E] flex items-center justify-between text-xs font-esports text-[#FF1A1A]">
+          <span>MATCH HARDWARE</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+      </div>
+
+      <!-- Card 3: Zero Recoil -->
+      <div class="glass-card rounded p-6 relative group overflow-hidden border border-[#1E1E1E] hover:border-[#FF1A1A] transition-all">
+        <div class="w-12 h-12 rounded bg-[#1A0505] border border-[#B00000] flex items-center justify-center text-xl text-[#FF1A1A] mb-4 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,26,26,0.3)]">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <h3 class="font-heading font-bold text-lg text-white mb-2 tracking-wide flex items-center gap-2">
+          ⚡ ZERO RECOIL
+        </h3>
+        <p class="text-xs sm:text-sm text-gray-400 font-body leading-relaxed">
+          Find optimized sensitivity profiles with custom Fire Button Size, DPI, and aim drag metrics.
+        </p>
+        <div class="mt-4 pt-3 border-t border-[#1E1E1E] flex items-center justify-between text-xs font-esports text-[#FF1A1A]">
+          <span>MAX ACCURACY</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+      </div>
+
+      <!-- Card 4: Regular Updates -->
+      <div class="glass-card rounded p-6 relative group overflow-hidden border border-[#1E1E1E] hover:border-[#FF1A1A] transition-all">
+        <div class="w-12 h-12 rounded bg-[#1A0505] border border-[#B00000] flex items-center justify-center text-xl text-[#FF1A1A] mb-4 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,26,26,0.3)]">
+          <i class="fa-solid fa-fire"></i>
+        </div>
+        <h3 class="font-heading font-bold text-lg text-white mb-2 tracking-wide flex items-center gap-2">
+          🔥 REGULAR UPDATES
+        </h3>
+        <p class="text-xs sm:text-sm text-gray-400 font-body leading-relaxed">
+          Receive the latest sensitivity updates every Free Fire OB patch tested in live custom rooms.
+        </p>
+        <div class="mt-4 pt-3 border-t border-[#1E1E1E] flex items-center justify-between text-xs font-esports text-[#FF1A1A]">
+          <span>OB46 VERIFIED</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 6-STEP SENSITIVITY FLOW PIPELINE BANNER -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="p-6 sm:p-8 rounded bg-gradient-to-r from-[#120505] via-[#0B0B0B] to-[#120505] border border-[#B00000]/40">
+      <div class="text-center max-w-xl mx-auto mb-8">
+        <h3 class="font-heading font-black text-xl sm:text-2xl text-white tracking-wider">
+          THE ZERO RECOIL PIPELINE
+        </h3>
+        <p class="text-xs text-gray-400 font-esports tracking-widest mt-1">
+          HOW ARMUGA X CATZX CALIBRATES YOUR PERFECT RECOIL
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center">
+        
+        <div class="p-3 rounded bg-[#050505] border border-[#1E1E1E]">
+          <div class="text-xs text-[#FF1A1A] font-esports font-bold">STEP 01</div>
+          <div class="font-heading text-xs sm:text-sm font-bold text-white mt-1">SELECT GUN</div>
+          <div class="text-[10px] text-gray-500 mt-1">MP40, M1887, etc.</div>
+        </div>
+
+        <div class="p-3 rounded bg-[#050505] border border-[#1E1E1E]">
+          <div class="text-xs text-[#FF1A1A] font-esports font-bold">STEP 02</div>
+          <div class="font-heading text-xs sm:text-sm font-bold text-white mt-1">SELECT BRAND</div>
+          <div class="text-[10px] text-gray-500 mt-1">POCO, Redmi, Samsung</div>
+        </div>
+
+        <div class="p-3 rounded bg-[#050505] border border-[#1E1E1E]">
+          <div class="text-xs text-[#FF1A1A] font-esports font-bold">STEP 03</div>
+          <div class="font-heading text-xs sm:text-sm font-bold text-white mt-1">SELECT MODEL</div>
+          <div class="text-[10px] text-gray-500 mt-1">M6 5G, X6 Pro, etc.</div>
+        </div>
+
+        <div class="p-3 rounded bg-[#050505] border border-[#1E1E1E]">
+          <div class="text-xs text-[#FF1A1A] font-esports font-bold">STEP 04</div>
+          <div class="font-heading text-xs sm:text-sm font-bold text-white mt-1">SELECT RAM</div>
+          <div class="text-[10px] text-gray-500 mt-1">4GB, 6GB, 8GB, 12GB</div>
+        </div>
+
+        <div class="p-3 rounded bg-[#050505] border border-[#1E1E1E]">
+          <div class="text-xs text-[#FF1A1A] font-esports font-bold">STEP 05</div>
+          <div class="font-heading text-xs sm:text-sm font-bold text-white mt-1">PROCESSOR</div>
+          <div class="text-[10px] text-gray-500 mt-1">Dimensity / Snapdragon</div>
+        </div>
+
+        <div class="p-3 rounded bg-[#1A0505] border border-[#FF1A1A] shadow-[0_0_15px_rgba(255,26,26,0.3)]">
+          <div class="text-xs text-[#FF1A1A] font-esports font-black">STEP 06</div>
+          <div class="font-heading text-xs sm:text-sm font-bold text-white mt-1">ZERO RECOIL</div>
+          <div class="text-[10px] text-red-300 mt-1">Unlocked Sensitivity</div>
+        </div>
+
+      </div>
+
+      <div class="text-center mt-8">
+        <a href="{{ url_for('sensitivity_page') }}" class="btn-esports-red text-sm py-2.5 px-6">
+          LAUNCH SENSITIVITY FINDER <i class="fa-solid fa-arrow-right ml-1"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- POPULAR COMPETITIVE GUNS SECTION -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+      <div>
+        <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white tracking-wider">
+          POPULAR <span class="text-[#FF1A1A]">COMPETITIVE GUNS</span>
+        </h2>
+        <p class="text-xs text-gray-400 font-esports tracking-wider mt-1">
+          CHOOSE A WEAPON TO START CALIBRATING FOR YOUR PHONE
+        </p>
+      </div>
+      <a href="{{ url_for('guns_list') }}" class="text-xs font-esports font-bold text-[#FF1A1A] hover:underline flex items-center gap-1">
+        VIEW ALL 28 GUNS <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+      {% for gun in popular_guns %}
+      <div class="glass-card rounded p-4 flex flex-col justify-between border border-[#1E1E1E] hover:border-[#FF1A1A] transition group">
+        <div>
+          <div class="flex items-center justify-between text-[10px] font-esports text-gray-400 mb-2">
+            <span class="bg-[#120505] text-[#FF1A1A] px-2 py-0.5 rounded border border-[#B00000]/40 font-bold">
+              {{ gun.category_name }}
+            </span>
+            <span>DMG: {{ gun.damage }}</span>
+          </div>
+          <div class="h-24 sm:h-28 w-full bg-[#050505] rounded flex items-center justify-center p-2 mb-3 relative overflow-hidden group-hover:scale-105 transition-transform duration-300">
+            {% if gun.image %}
+              <img src="{{ gun.image }}" alt="{{ gun.name }}" class="max-h-full object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+            {% else %}
+              <i class="fa-solid fa-crosshairs text-4xl text-stone-700"></i>
+            {% endif %}
+          </div>
+          <h4 class="font-heading font-bold text-sm sm:text-base text-white group-hover:text-[#FF1A1A] transition">
+            {{ gun.name }}
+          </h4>
+        </div>
+        <div class="mt-3 pt-2 border-t border-[#1E1E1E]">
+          <a href="{{ url_for('sensitivity_page') }}?gun={{ gun.slug }}" 
+             class="w-full block text-center py-1.5 bg-[#120505] hover:bg-[#FF1A1A] text-gray-300 hover:text-white border border-[#B00000]/30 hover:border-[#FF1A1A] text-xs font-esports font-bold rounded transition">
+            TUNE SENS
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- POPULAR DEVICES -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+      <div>
+        <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white tracking-wider">
+          POPULAR <span class="text-[#FF1A1A]">GAMING DEVICES</span>
+        </h2>
+        <p class="text-xs text-gray-400 font-esports tracking-wider mt-1">
+          POCO, REDMI, SAMSUNG, REALME, ONEPLUS & MORE
+        </p>
+      </div>
+      <a href="{{ url_for('devices_list') }}" class="text-xs font-esports font-bold text-[#FF1A1A] hover:underline flex items-center gap-1">
+        VIEW ALL DEVICES <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {% for dev in featured_devices %}
+      <div class="glass-card rounded p-5 border border-[#1E1E1E] hover:border-[#FF1A1A] transition">
+        <div class="flex items-start justify-between">
+          <div>
+            <span class="text-[11px] font-esports font-bold text-[#FF1A1A] uppercase tracking-wider">
+              {{ dev.brand_name }}
+            </span>
+            <h4 class="font-heading font-bold text-base text-white mt-0.5">
+              {{ dev.model_name }}
+            </h4>
+          </div>
+          <span class="text-xs bg-[#120505] border border-[#B00000]/40 text-gray-300 px-2 py-0.5 rounded font-esports">
+            {{ dev.refresh_rate }}
+          </span>
+        </div>
+
+        <div class="mt-4 space-y-1.5 text-xs text-gray-400 font-body">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-microchip text-red-500 text-xs w-4"></i>
+            <span class="text-gray-300 truncate">{{ dev.processor }}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-memory text-red-500 text-xs w-4"></i>
+            <span>{{ dev.ram_list }}</span>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-[#1E1E1E] flex items-center justify-between">
+          <a href="{{ url_for('device_detail', device_id=dev.id) }}" class="text-xs font-esports font-bold text-gray-400 hover:text-white transition">
+            SPECS & SENSITIVITIES
+          </a>
+          <a href="{{ url_for('sensitivity_page') }}?device={{ dev.id }}" class="text-xs font-esports font-bold text-[#FF1A1A] hover:underline">
+            TUNE NOW →
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- LATEST UPDATES SECTION -->
+  {% if latest_updates %}
+  <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-2 text-xs font-esports font-bold text-[#FF1A1A] tracking-widest uppercase mb-1">
+        <i class="fa-solid fa-bullhorn"></i> PATCH NOTES & ESPORTS INTEL
+      </div>
+      <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white tracking-wider">
+        🔴 LATEST UPDATES
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {% for update in latest_updates %}
+      <div class="glass-card rounded overflow-hidden border border-[#1E1E1E] hover:border-[#FF1A1A] transition flex flex-col">
+        {% if update.image %}
+        <div class="h-44 w-full overflow-hidden bg-black relative">
+          <img src="{{ update.image }}" alt="{{ update.title }}" class="w-full h-full object-cover opacity-80 hover:scale-105 transition duration-500">
+          <span class="absolute top-3 left-3 bg-[#FF1A1A] text-white text-[10px] font-black font-esports px-2 py-0.5 rounded clip-badge">
+            NEW UPDATE
+          </span>
+        </div>
+        {% endif %}
+        <div class="p-5 flex-grow flex flex-col justify-between">
+          <div>
+            <div class="text-[11px] font-esports text-gray-400 mb-2 flex items-center justify-between">
+              <span>BY <strong class="text-white">{{ update.admin_name }}</strong></span>
+              <span>{{ update.created_at[:10] }}</span>
+            </div>
+            <h3 class="font-heading font-bold text-base text-white mb-2 leading-snug">
+              {{ update.title }}
+            </h3>
+            <p class="text-xs text-gray-400 font-body line-clamp-3 leading-relaxed">
+              {{ update.description }}
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#1E1E1E]">
+            <a href="{{ url_for('updates_list') }}" class="text-xs font-esports font-bold text-[#FF1A1A] hover:underline flex items-center justify-between">
+              <span>READ FULL RELEASE</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- CREATOR SPOTLIGHT: ARMUGA X CATZX -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+    <div class="p-8 rounded-lg bg-gradient-to-br from-[#120505] via-[#050505] to-[#120505] border border-[#B00000]/50 shadow-[0_0_30px_rgba(255,26,26,0.15)]">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+        <div class="text-center md:text-left md:col-span-2 space-y-4">
+          <div class="text-xs font-esports font-bold text-[#FF1A1A] tracking-widest uppercase">
+            MEET THE CREATORS
+          </div>
+          <h3 class="font-heading font-black text-2xl sm:text-3xl text-white">
+            ARMUGA <span class="text-[#FF1A1A]">X</span> CATZX
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-300 font-body leading-relaxed">
+            Professional Free Fire content creators and competitive analysts. With hundreds of hours of drag sensitivity calibration across budget, midrange, and flagship devices, ARMUGA and CATZX built ZERO RECOIL to eliminate ghost touches, aim shakes, and missed headshots.
+          </p>
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="{{ url_for('sensitivity_page') }}" class="btn-esports-red text-xs py-2 px-5">
+              TRY THEIR SETTINGS
+            </a>
+            <a href="{{ url_for('about_page') }}" class="btn-esports-outline text-xs py-2 px-5">
+              OUR METHODOLOGY
+            </a>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <div class="w-36 h-36 rounded-full bg-[#1A0505] border-2 border-[#FF1A1A] flex items-center justify-center shadow-[0_0_25px_rgba(255,26,26,0.4)]">
+            <div class="text-center">
+              <i class="fa-solid fa-crown text-3xl text-[#FF1A1A] mb-1"></i>
+              <div class="font-heading text-xs font-black tracking-wider text-white">ZERO RECOIL</div>
+              <div class="text-[9px] font-esports text-gray-400">VERIFIED CREATORS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

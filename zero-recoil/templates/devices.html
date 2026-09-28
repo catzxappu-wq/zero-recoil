@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}ZERO RECOIL — ALL DEVICES | ARMUGA X CATZX{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+  
+  <!-- Header Title -->
+  <div class="text-center max-w-3xl mx-auto mb-10">
+    <div class="inline-flex items-center gap-2 bg-[#120505] border border-[#B00000]/60 px-4 py-1 rounded-full mb-3">
+      <i class="fa-solid fa-mobile-screen text-[#FF1A1A] text-xs"></i>
+      <span class="text-xs font-esports font-bold tracking-widest text-gray-200">HARDWARE COMPATIBILITY MATRIX</span>
+    </div>
+    <h1 class="font-heading font-black text-3xl sm:text-5xl text-white tracking-wider">
+      ZERO RECOIL — <span class="text-[#FF1A1A] glow-text-red">ALL DEVICES</span>
+    </h1>
+    <p class="text-xs sm:text-sm text-gray-400 font-esports tracking-wider mt-2">
+      SELECT YOUR DEVICE MODEL TO VIEW VERIFIED FREE FIRE SENSITIVITIES
+    </p>
+  </div>
+
+  <!-- Search & Brand Filter Bar -->
+  <div class="glass-card rounded p-4 border border-[#1E1E1E] mb-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- Brand Pills -->
+      <div class="flex flex-wrap items-center gap-1.5 font-esports text-xs font-bold tracking-wider max-h-36 overflow-y-auto w-full md:w-3/4 pr-2">
+        <a href="{{ url_for('devices_list') }}" 
+           class="px-3 py-1 rounded transition {% if not active_brand %}bg-[#FF1A1A] text-white shadow-[0_0_10px_rgba(255,26,26,0.3)]{% else %}bg-[#0B0B0B] text-gray-300 hover:text-white border border-[#1E1E1E]{% endif %}">
+          ALL BRANDS ({{ total_devices }})
+        </a>
+        {% for brand in brands %}
+        <a href="{{ url_for('devices_list') }}?brand={{ brand.slug }}" 
+           class="px-2.5 py-1 rounded transition {% if active_brand == brand.slug %}bg-[#FF1A1A] text-white shadow-[0_0_10px_rgba(255,26,26,0.3)]{% else %}bg-[#0B0B0B] text-gray-300 hover:text-white border border-[#1E1E1E]{% endif %}">
+          {{ brand.name }} ({{ brand.device_count }})
+        </a>
+        {% endfor %}
+      </div>
+
+      <!-- Quick Search input -->
+      <div class="relative w-full md:w-64">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs"></i>
+        <input type="text" id="device-search-input" placeholder="Search model (e.g. POCO M6, S23)..." 
+               class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] text-white text-xs rounded pl-9 pr-3 py-2 font-body">
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Device Cards Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="devices-roster-grid">
+    {% for dev in devices %}
+    <div class="device-item-card glass-card rounded-lg p-5 border border-[#1E1E1E] hover:border-[#FF1A1A] transition group flex flex-col justify-between"
+         data-name="{{ dev.model_name|lower }} {{ dev.brand_name|lower }}" data-brand="{{ dev.brand_slug }}">
+      
+      <div>
+        <div class="flex items-start justify-between">
+          <div>
+            <span class="text-[10px] font-esports font-bold text-[#FF1A1A] tracking-wider uppercase">
+              {{ dev.brand_name }}
+            </span>
+            <h3 class="font-heading font-black text-lg text-white group-hover:text-[#FF1A1A] transition mt-0.5">
+              {{ dev.model_name }}
+            </h3>
+          </div>
+          <span class="text-xs bg-[#120505] border border-[#B00000]/40 text-[#FF1A1A] font-esports font-bold px-2.5 py-0.5 rounded">
+            {{ dev.refresh_rate }}
+          </span>
+        </div>
+
+        <!-- Specifications Breakdown -->
+        <div class="mt-4 space-y-2 text-xs text-gray-400 font-body bg-[#050505] p-3 rounded border border-[#1E1E1E]">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-microchip text-red-500 text-xs w-4"></i>
+            <span class="text-gray-300 font-medium truncate">{{ dev.processor }}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-memory text-red-500 text-xs w-4"></i>
+            <span>{{ dev.ram_list or 'Standard' }}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-mobile text-red-500 text-xs w-4"></i>
+            <span class="truncate">{{ dev.display or 'High Refresh Screen' }}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-gear text-red-500 text-xs w-4"></i>
+            <span>{{ dev.operating_system }}</span>
+          </div>
+        </div>
+
+        <div class="mt-3 text-[11px] font-esports text-gray-400 flex items-center justify-between">
+          <span>CALIBRATED PROFILES:</span>
+          <strong class="text-[#FF1A1A]">{{ dev.sensitivity_count }} WEAPONS</strong>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="mt-4 pt-3 border-t border-[#1E1E1E] flex items-center gap-2">
+        <a href="{{ url_for('device_detail', device_id=dev.id) }}" 
+           class="flex-1 btn-esports-outline text-xs py-2 text-center justify-center">
+          <i class="fa-solid fa-list-check"></i> VIEW SENSITIVITIES
+        </a>
+        <a href="{{ url_for('sensitivity_page') }}?device={{ dev.id }}" 
+           class="btn-esports-red text-xs py-2 px-3 text-center justify-center" title="Tune for this device">
+          <i class="fa-solid fa-crosshairs"></i>
+        </a>
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Bottom Request Banner if User's Device Not Listed -->
+  <div class="mt-12 p-6 rounded-lg bg-[#0B0B0B] border border-[#1E1E1E] text-center max-w-2xl mx-auto">
+    <h4 class="font-heading font-bold text-base text-white mb-1">CANNOT FIND YOUR PHONE?</h4>
+    <p class="text-xs text-gray-400 font-body mb-4">
+      ARMUGA and CATZX calibrate new devices on request. Tell us your phone brand, model, and RAM.
+    </p>
+    <a href="{{ url_for('sensitivity_page') }}" class="btn-esports-red text-xs py-2 px-6">
+      <i class="fa-solid fa-paper-plane mr-1"></i> REQUEST DEVICE CALIBRATION
+    </a>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('device-search-input')?.addEventListener('input', (e) => {
+  const query = e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.device-item-card').forEach(card => {
+    const name = card.dataset.name;
+    if (name.includes(query)) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+});
+</script>
+{% endblock %}

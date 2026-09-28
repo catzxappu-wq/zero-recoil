@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}🔴 LATEST UPDATES — ZERO RECOIL | ARMUGA X CATZX{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+  
+  <div class="text-center max-w-3xl mx-auto mb-12">
+    <div class="inline-flex items-center gap-2 bg-[#120505] border border-[#B00000]/60 px-4 py-1 rounded-full mb-3">
+      <span class="live-pulse-dot"></span>
+      <span class="text-xs font-esports font-bold tracking-widest text-[#FF1A1A]">OFFICIAL DISPATCHES</span>
+    </div>
+    <h1 class="font-heading font-black text-3xl sm:text-5xl text-white tracking-wider">
+      🔴 LATEST <span class="text-[#FF1A1A] glow-text-red">UPDATES</span>
+    </h1>
+    <p class="text-xs sm:text-sm text-gray-400 font-esports tracking-wider mt-2">
+      NEW RECOIL PROFILES, OB PATCH ANALYSES & ESPORTS INTEL
+    </p>
+  </div>
+
+  <!-- Updates list -->
+  <div class="space-y-8">
+    {% for u in updates %}
+    <article class="glass-card rounded-lg overflow-hidden border border-[#1E1E1E] hover:border-[#FF1A1A] transition shadow-xl">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        
+        {% if u.image %}
+        <div class="md:col-span-5 h-56 md:h-full min-h-[220px] bg-[#050505] relative overflow-hidden">
+          <img src="{{ u.image }}" alt="{{ u.title }}" class="w-full h-full object-cover opacity-85 hover:scale-105 transition duration-500">
+          <span class="absolute top-3 left-3 bg-[#FF1A1A] text-white text-[10px] font-black font-esports px-2 py-0.5 rounded clip-badge shadow-md">
+            NEW
+          </span>
+        </div>
+        {% endif %}
+
+        <div class="{% if u.image %}md:col-span-7{% else %}md:col-span-12{% endif %} p-6 md:p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 text-xs font-esports text-gray-400 mb-2">
+              <span class="text-[#FF1A1A] font-bold"><i class="fa-solid fa-user-shield"></i> {{ u.admin_name }}</span>
+              <span>•</span>
+              <span><i class="fa-regular fa-clock"></i> {{ u.created_at[:10] }}</span>
+            </div>
+
+            <h2 class="font-heading font-black text-xl sm:text-2xl text-white mb-3 leading-snug">
+              {{ u.title }}
+            </h2>
+
+            <p class="text-xs sm:text-sm text-gray-300 font-body leading-relaxed mb-6">
+              {{ u.description }}
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-[#1E1E1E] flex flex-wrap items-center justify-between gap-4">
+            <a href="{{ url_for('sensitivity_page') }}" class="btn-esports-red text-xs py-2 px-5">
+              TEST NEW SENSITIVITIES <i class="fa-solid fa-arrow-right ml-1"></i>
+            </a>
+            <span class="text-[11px] font-esports text-gray-500">
+              OB46 COMPATIBLE
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}

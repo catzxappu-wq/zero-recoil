@@ -1,0 +1,278 @@
+{% extends "admin/base.html" %}
+
+{% block title %}GUN MANAGEMENT — ZERO RECOIL ADMIN{% endblock %}
+{% block admin_title %}GUN DATABASE MANAGEMENT{% endblock %}
+
+{% block admin_content %}
+<div class="space-y-8">
+  
+  <!-- Top Action & Add Button -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div>
+      <h1 class="font-heading font-black text-2xl text-white">GUN ROSTER</h1>
+      <p class="text-xs text-gray-400 font-esports">MANAGE ALL COMPETITIVE FREE FIRE WEAPONS & BASE RECOIL STATS</p>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <button onclick="document.getElementById('add-gun-modal').classList.remove('hidden')" class="btn-esports-red text-xs py-2 px-4">
+        <i class="fa-solid fa-plus"></i> ADD NEW GUN
+      </button>
+      <button onclick="document.getElementById('add-cat-modal').classList.remove('hidden')" class="btn-esports-outline text-xs py-2 px-3">
+        <i class="fa-solid fa-folder-plus text-[#FF1A1A]"></i> NEW CATEGORY
+      </button>
+    </div>
+  </div>
+
+  <!-- Search & Filter Bar -->
+  <div class="glass-card rounded p-4 border border-[#1E1E1E] flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex flex-wrap items-center gap-2 text-xs font-esports font-bold">
+      <a href="{{ url_for('admin_guns') }}" class="px-3 py-1.5 rounded transition {% if not active_cat %}bg-[#FF1A1A] text-white{% else %}bg-[#050505] text-gray-400 border border-[#1E1E1E]{% endif %}">
+        ALL ({{ guns|length }})
+      </a>
+      {% for c in categories %}
+      <a href="{{ url_for('admin_guns') }}?category={{ c.slug }}" class="px-3 py-1.5 rounded transition {% if active_cat == c.slug %}bg-[#FF1A1A] text-white{% else %}bg-[#050505] text-gray-400 border border-[#1E1E1E]{% endif %}">
+        {{ c.name }}
+      </a>
+      {% endfor %}
+    </div>
+
+    <div class="w-full sm:w-64">
+      <input type="text" id="admin-gun-search" placeholder="Search gun name..." 
+             class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded px-3 py-1.5 text-xs text-white">
+    </div>
+  </div>
+
+  <!-- Guns Table -->
+  <div class="glass-card rounded-lg border border-[#1E1E1E] overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs font-esports">
+        <thead class="bg-[#080808] border-b border-[#1E1E1E] text-gray-400 uppercase tracking-wider">
+          <tr>
+            <th class="p-4">IMAGE</th>
+            <th class="p-4">NAME</th>
+            <th class="p-4">CATEGORY</th>
+            <th class="p-4">STATS (DMG / ROF / RNG / ACC)</th>
+            <th class="p-4">STATUS</th>
+            <th class="p-4 text-right">ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[#1E1E1E]" id="admin-gun-tbody">
+          {% for gun in guns %}
+          <tr class="admin-gun-row hover:bg-[#120505] transition" data-name="{{ gun.name|lower }}">
+            <td class="p-4">
+              <div class="w-12 h-10 bg-[#050505] rounded border border-[#1E1E1E] flex items-center justify-center p-1">
+                {% if gun.image %}
+                  <img src="{{ gun.image }}" alt="{{ gun.name }}" class="max-h-full max-w-full object-contain">
+                {% else %}
+                  <i class="fa-solid fa-crosshairs text-stone-600"></i>
+                {% endif %}
+              </div>
+            </td>
+            <td class="p-4 font-heading font-bold text-sm text-white">
+              {{ gun.name }}
+            </td>
+            <td class="p-4">
+              <span class="bg-[#120505] text-[#FF1A1A] border border-[#B00000]/40 px-2 py-0.5 rounded font-bold">
+                {{ gun.category_name }}
+              </span>
+            </td>
+            <td class="p-4 text-gray-300">
+              DMG: <strong class="text-white">{{ gun.damage }}</strong> | 
+              ROF: <strong class="text-white">{{ gun.fire_rate }}</strong> | 
+              RNG: <strong class="text-white">{{ gun.range_val }}</strong> | 
+              ACC: <strong class="text-white">{{ gun.accuracy }}</strong>
+            </td>
+            <td class="p-4">
+              <form action="{{ url_for('admin_toggle_gun_status', id=gun.id) }}" method="POST">
+                <button type="submit" class="px-2 py-0.5 rounded font-bold uppercase text-[10px] {% if gun.status == 'active' %}bg-green-950 text-green-400 border border-green-700{% else %}bg-zinc-800 text-gray-400{% endif %}">
+                  {{ gun.status }}
+                </button>
+              </form>
+            </td>
+            <td class="p-4 text-right space-x-2">
+              <button onclick="openEditGunModal({{ gun.id }}, '{{ gun.name }}', {{ gun.category_id }}, '{{ gun.image or '' }}', '{{ gun.description or '' }}', {{ gun.damage }}, {{ gun.fire_rate }}, {{ gun.range_val }}, {{ gun.accuracy }}, '{{ gun.status }}')" 
+                      class="text-gray-300 hover:text-white p-1" title="Edit">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <form action="{{ url_for('admin_delete_gun', id=gun.id) }}" method="POST" class="inline" onsubmit="return confirm('Delete this gun and its sensitivities?');">
+                <button type="submit" class="text-red-500 hover:text-red-300 p-1" title="Delete">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ADD GUN MODAL -->
+<div id="add-gun-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+  <div class="glass-card rounded-lg border border-[#FF1A1A] p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-heading font-bold text-lg text-white">ADD NEW FREE FIRE GUN</h3>
+      <button onclick="document.getElementById('add-gun-modal').classList.add('hidden')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+    </div>
+
+    <form action="{{ url_for('admin_add_gun') }}" method="POST" class="space-y-4 text-xs font-esports">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-300 mb-1 font-bold">GUN NAME</label>
+          <input type="text" name="name" required placeholder="e.g. BIZON" class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2 text-white font-body">
+        </div>
+        <div>
+          <label class="block text-gray-300 mb-1 font-bold">CATEGORY</label>
+          <select name="category_id" required class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2 text-white font-body">
+            {% for c in categories %}
+            <option value="{{ c.id }}">{{ c.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">IMAGE URL</label>
+        <input type="url" name="image" placeholder="https://..." class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2 text-white font-body">
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">DESCRIPTION / RECOIL BEHAVIOR</label>
+        <textarea name="description" rows="2" placeholder="Weapon overview..." class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2 text-white font-body"></textarea>
+      </div>
+
+      <div class="grid grid-cols-4 gap-2">
+        <div>
+          <label class="block text-gray-400 mb-1">DAMAGE</label>
+          <input type="number" name="damage" value="50" min="0" max="100" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+        </div>
+        <div>
+          <label class="block text-gray-400 mb-1">FIRE RATE</label>
+          <input type="number" name="fire_rate" value="50" min="0" max="100" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+        </div>
+        <div>
+          <label class="block text-gray-400 mb-1">RANGE</label>
+          <input type="number" name="range_val" value="50" min="0" max="100" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+        </div>
+        <div>
+          <label class="block text-gray-400 mb-1">ACCURACY</label>
+          <input type="number" name="accuracy" value="50" min="0" max="100" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+        </div>
+      </div>
+
+      <button type="submit" class="w-full btn-esports-red py-2.5 text-sm">SAVE GUN</button>
+    </form>
+  </div>
+</div>
+
+<!-- EDIT GUN MODAL -->
+<div id="edit-gun-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+  <div class="glass-card rounded-lg border border-[#FF1A1A] p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-heading font-bold text-lg text-white">EDIT GUN</h3>
+      <button onclick="document.getElementById('edit-gun-modal').classList.add('hidden')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+    </div>
+
+    <form id="edit-gun-form" method="POST" class="space-y-4 text-xs font-esports">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-300 mb-1 font-bold">GUN NAME</label>
+          <input type="text" id="edit-gun-name" name="name" required class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+        </div>
+        <div>
+          <label class="block text-gray-300 mb-1 font-bold">CATEGORY</label>
+          <select id="edit-gun-category" name="category_id" required class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+            {% for c in categories %}
+            <option value="{{ c.id }}">{{ c.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">IMAGE URL</label>
+        <input type="url" id="edit-gun-image" name="image" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+      </div>
+
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">DESCRIPTION</label>
+        <textarea id="edit-gun-desc" name="description" rows="2" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body"></textarea>
+      </div>
+
+      <div class="grid grid-cols-4 gap-2">
+        <div>
+          <label class="block text-gray-400 mb-1">DAMAGE</label>
+          <input type="number" id="edit-gun-damage" name="damage" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+        </div>
+        <div>
+          <label class="block text-gray-400 mb-1">FIRE RATE</label>
+          <input type="number" id="edit-gun-fire-rate" name="fire_rate" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+        </div>
+        <div>
+          <label class="block text-gray-400 mb-1">RANGE</label>
+          <input type="number" id="edit-gun-range" name="range_val" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+        </div>
+        <div>
+          <label class="block text-gray-400 mb-1">ACCURACY</label>
+          <input type="number" id="edit-gun-accuracy" name="accuracy" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+        </div>
+      </div>
+
+      <button type="submit" class="w-full btn-esports-red py-2.5 text-sm">UPDATE GUN</button>
+    </form>
+  </div>
+</div>
+
+<!-- ADD CATEGORY MODAL -->
+<div id="add-cat-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+  <div class="glass-card rounded-lg border border-[#FF1A1A] p-6 max-w-md w-full">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-heading font-bold text-lg text-white">ADD GUN CATEGORY</h3>
+      <button onclick="document.getElementById('add-cat-modal').classList.add('hidden')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+    </div>
+
+    <form action="{{ url_for('admin_add_category') }}" method="POST" class="space-y-4 text-xs font-esports">
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">CATEGORY NAME</label>
+        <input type="text" name="name" required placeholder="e.g. MARKSMAN RIFLES" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+      </div>
+      <div>
+        <label class="block text-gray-300 mb-1 font-bold">ICON CLASS (FontAwesome)</label>
+        <input type="text" name="icon" placeholder="fa-crosshairs" value="fa-crosshairs" class="w-full bg-[#050505] border border-[#1E1E1E] rounded p-2 text-white font-body">
+      </div>
+      <button type="submit" class="w-full btn-esports-red py-2.5 text-sm">ADD CATEGORY</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block admin_scripts %}
+<script>
+document.getElementById('admin-gun-search')?.addEventListener('input', (e) => {
+  const q = e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.admin-gun-row').forEach(row => {
+    if (row.dataset.name.includes(q)) {
+      row.classList.remove('hidden');
+    } else {
+      row.classList.add('hidden');
+    }
+  });
+});
+
+function openEditGunModal(id, name, catId, img, desc, dmg, rof, rng, acc, status) {
+  const form = document.getElementById('edit-gun-form');
+  form.action = `/admin/guns/edit/${id}`;
+  document.getElementById('edit-gun-name').value = name;
+  document.getElementById('edit-gun-category').value = catId;
+  document.getElementById('edit-gun-image').value = img;
+  document.getElementById('edit-gun-desc').value = desc;
+  document.getElementById('edit-gun-damage').value = dmg;
+  document.getElementById('edit-gun-fire-rate').value = rof;
+  document.getElementById('edit-gun-range').value = rng;
+  document.getElementById('edit-gun-accuracy').value = acc;
+  document.getElementById('edit-gun-modal').classList.remove('hidden');
+}
+</script>
+{% endblock %}

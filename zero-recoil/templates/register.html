@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}CREATE PLAYER ACCOUNT — ZERO RECOIL | ARMUGA X CATZX{% endblock %}
+
+{% block content %}
+<div class="min-h-[75vh] flex items-center justify-center px-4 py-12">
+  <div class="max-w-md w-full glass-card rounded-lg p-6 sm:p-8 border border-[#B00000]/50 shadow-[0_0_30px_rgba(255,26,26,0.2)]">
+    
+    <div class="text-center mb-6">
+      <div class="w-12 h-12 rounded bg-gradient-to-br from-[#FF1A1A] to-[#5A0000] p-0.5 mx-auto mb-3 shadow-[0_0_15px_rgba(255,26,26,0.4)]">
+        <div class="w-full h-full bg-[#050505] flex items-center justify-center">
+          <i class="fa-solid fa-user-plus text-[#FF1A1A]"></i>
+        </div>
+      </div>
+      <h2 class="font-heading font-black text-2xl text-white tracking-wider">
+        REGISTER <span class="text-[#FF1A1A]">ACCOUNT</span>
+      </h2>
+      <p class="text-xs text-gray-400 font-esports tracking-wider mt-1">
+        SAVE SENSITIVITIES, TRACK REQUESTS & RECEIVE UPDATES
+      </p>
+    </div>
+
+    <form action="{{ url_for('register') }}" method="POST" class="space-y-4 text-xs font-esports">
+      <div>
+        <label class="block text-gray-300 font-bold mb-1">IN-GAME NAME OR NAME</label>
+        <div class="relative">
+          <i class="fa-solid fa-gamepad absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+          <input type="text" name="name" required placeholder="e.g. RecoilGod99" 
+                 class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded py-2.5 pl-9 pr-3 text-white font-body">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-300 font-bold mb-1">EMAIL ADDRESS</label>
+        <div class="relative">
+          <i class="fa-solid fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+          <input type="email" name="email" required placeholder="player@gmail.com" 
+                 class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded py-2.5 pl-9 pr-3 text-white font-body">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-300 font-bold mb-1">PASSWORD (MIN 6 CHARACTERS)</label>
+        <div class="relative">
+          <i class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+          <input type="password" name="password" required minlength="6" placeholder="••••••••" 
+                 class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded py-2.5 pl-9 pr-3 text-white font-body">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-300 font-bold mb-1">CONFIRM PASSWORD</label>
+        <div class="relative">
+          <i class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+          <input type="password" name="confirm_password" required minlength="6" placeholder="••••••••" 
+                 class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded py-2.5 pl-9 pr-3 text-white font-body">
+        </div>
+      </div>
+
+      <button type="submit" class="w-full btn-esports-red py-3 text-sm tracking-wider shadow-[0_0_20px_rgba(255,26,26,0.5)]">
+        CREATE ACCOUNT
+      </button>
+    </form>
+
+    <div class="mt-6 pt-4 border-t border-[#1E1E1E] text-center text-xs font-esports">
+      <span class="text-gray-400">ALREADY HAVE AN ACCOUNT?</span>
+      <a href="{{ url_for('login') }}" class="text-[#FF1A1A] font-bold hover:underline ml-1">LOGIN HERE</a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

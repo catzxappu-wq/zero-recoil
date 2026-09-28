@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}PROFILE SETTINGS — ZERO RECOIL | ARMUGA X CATZX{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+  
+  <div class="mb-8">
+    <div class="inline-flex items-center gap-2 text-xs font-esports font-bold text-[#FF1A1A] tracking-wider uppercase mb-1">
+      <i class="fa-solid fa-user-gear"></i> ACCOUNT SETTINGS
+    </div>
+    <h1 class="font-heading font-black text-2xl sm:text-3xl text-white tracking-wider">
+      PLAYER <span class="text-[#FF1A1A]">PROFILE</span>
+    </h1>
+    <p class="text-xs text-gray-400 font-esports tracking-wider mt-1">
+      MANAGE YOUR IN-GAME NAME, EMAIL AND ACCOUNT SECURITY
+    </p>
+  </div>
+
+  <div class="glass-card rounded-lg p-6 sm:p-8 border border-[#B00000]/40 shadow-xl">
+    
+    <!-- Profile Form -->
+    <form action="{{ url_for('profile_page') }}" method="POST" class="space-y-6 text-xs font-esports">
+      
+      <div>
+        <label class="block text-gray-300 font-bold mb-1">IN-GAME NAME / PLAYER NAME</label>
+        <input type="text" name="name" value="{{ current_user.name }}" required 
+               class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-3 text-white font-body">
+      </div>
+
+      <div>
+        <label class="block text-gray-300 font-bold mb-1">EMAIL ADDRESS (CANNOT BE CHANGED DIRECTLY)</label>
+        <input type="email" value="{{ current_user.email }}" disabled 
+               class="w-full bg-[#080808] border border-[#1E1E1E] rounded p-3 text-gray-500 font-body cursor-not-allowed">
+      </div>
+
+      <div class="pt-4 border-t border-[#1E1E1E]">
+        <h4 class="font-heading font-bold text-sm text-white mb-3">CHANGE PASSWORD (LEAVE BLANK TO KEEP CURRENT)</h4>
+        
+        <div class="space-y-3">
+          <div>
+            <label class="block text-gray-400 mb-1">CURRENT PASSWORD</label>
+            <input type="password" name="current_password" placeholder="••••••••" 
+                   class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2.5 text-white font-body">
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1">NEW PASSWORD (MIN 6 CHARACTERS)</label>
+            <input type="password" name="new_password" placeholder="••••••••" minlength="6"
+                   class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] rounded p-2.5 text-white font-body">
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-4 border-t border-[#1E1E1E]">
+        <a href="{{ url_for('dashboard') }}" class="btn-esports-outline text-xs py-2 px-4">
+          ← BACK TO DASHBOARD
+        </a>
+        <button type="submit" class="btn-esports-red text-xs py-2 px-6">
+          SAVE PROFILE CHANGES
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+{% endblock %}

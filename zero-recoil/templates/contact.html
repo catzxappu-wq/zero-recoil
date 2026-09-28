@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}CONTACT — ZERO RECOIL | ARMUGA X CATZX{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+  
+  <div class="text-center max-w-xl mx-auto mb-12">
+    <div class="inline-flex items-center gap-2 bg-[#120505] border border-[#B00000]/60 px-4 py-1 rounded-full mb-3">
+      <i class="fa-solid fa-envelope text-[#FF1A1A] text-xs"></i>
+      <span class="text-xs font-esports font-bold tracking-widest text-gray-200">GET IN TOUCH</span>
+    </div>
+    <h1 class="font-heading font-black text-3xl sm:text-5xl text-white tracking-wider">
+      CONTACT <span class="text-[#FF1A1A] glow-text-red">ARMUGA X CATZX</span>
+    </h1>
+    <p class="text-xs sm:text-sm text-gray-400 font-esports tracking-wider mt-2">
+      PLAYER SUPPORT, TOURNAMENT INQUIRIES & PARTNERSHIPS
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    
+    <!-- Info sidebar -->
+    <div class="space-y-4">
+      <div class="glass-card rounded p-5 border border-[#1E1E1E]">
+        <div class="text-[#FF1A1A] text-lg mb-2"><i class="fa-solid fa-bullhorn"></i></div>
+        <h4 class="font-heading font-bold text-sm text-white mb-1">DEVICE REQUESTS</h4>
+        <p class="text-xs text-gray-400 font-body">
+          Need settings for an unlisted device? Use the automated <a href="{{ url_for('sensitivity_page') }}" class="text-[#FF1A1A] hover:underline">Request Tool</a> in our sensitivity engine.
+        </p>
+      </div>
+
+      <div class="glass-card rounded p-5 border border-[#1E1E1E]">
+        <div class="text-[#FF1A1A] text-lg mb-2"><i class="fa-solid fa-gamepad"></i></div>
+        <h4 class="font-heading font-bold text-sm text-white mb-1">ESPORTS & CUSTOMS</h4>
+        <p class="text-xs text-gray-400 font-body">
+          Reach out to invite ARMUGA or CATZX for Free Fire competitive custom showmatches or workshops.
+        </p>
+      </div>
+
+      <div class="glass-card rounded p-5 border border-[#1E1E1E]">
+        <div class="text-[#FF1A1A] text-lg mb-2"><i class="fa-solid fa-envelope"></i></div>
+        <h4 class="font-heading font-bold text-sm text-white mb-1">OFFICIAL EMAIL</h4>
+        <p class="text-xs text-gray-300 font-body">
+          contact@zerorecoil.gg
+        </p>
+      </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="md:col-span-2 glass-card rounded-lg p-6 sm:p-8 border border-[#B00000]/40">
+      <form action="{{ url_for('contact_page') }}" method="POST" class="space-y-4 text-xs font-esports">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-gray-300 tracking-wider mb-1 font-bold">YOUR NAME</label>
+            <input type="text" name="name" required placeholder="Gamer IGN or Name" 
+                   class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] text-white p-3 rounded font-body">
+          </div>
+          <div>
+            <label class="block text-gray-300 tracking-wider mb-1 font-bold">EMAIL ADDRESS</label>
+            <input type="email" name="email" required placeholder="player@gmail.com" 
+                   class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] text-white p-3 rounded font-body">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-gray-300 tracking-wider mb-1 font-bold">SUBJECT</label>
+          <input type="text" name="subject" required placeholder="e.g. Sensitivity feedback / Device inquiry" 
+                 class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] text-white p-3 rounded font-body">
+        </div>
+
+        <div>
+          <label class="block text-gray-300 tracking-wider mb-1 font-bold">MESSAGE</label>
+          <textarea name="message" rows="5" required placeholder="Type your message for ARMUGA and CATZX..." 
+                    class="w-full bg-[#050505] border border-[#1E1E1E] focus:border-[#FF1A1A] text-white p-3 rounded font-body"></textarea>
+        </div>
+
+        <button type="submit" class="btn-esports-red py-3 px-8 text-sm w-full sm:w-auto">
+          <i class="fa-solid fa-paper-plane mr-2"></i> SEND MESSAGE
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
